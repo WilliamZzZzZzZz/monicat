@@ -36,6 +36,14 @@ const createWindow = () => {
     mainWindow.setAlwaysOnTop(initialSettings.alwaysOnTop, 'floating');
     mainWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
 
+    // Notify renderer when visibility changes
+    mainWindow.on('show', () => {
+        mainWindow?.webContents.send('window:visibility-changed', true);
+    });
+    mainWindow.on('hide', () => {
+        mainWindow?.webContents.send('window:visibility-changed', false);
+    });
+
     // and load the index.html of the app.
     if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
         mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
@@ -46,7 +54,7 @@ const createWindow = () => {
     }
 };
 
-type PetMenuAction = 'pet' | 'feed' | 'sleep' | 'wake';
+type PetMenuAction = 'pet' | 'feed' | 'sleep' | 'wake' | 'openSizePanel' | 'walkLeft' | 'walkRight';
 
 function sendPetMenuAction(action: PetMenuAction) {
     if (!mainWindow || mainWindow.isDestroyed()) return;
@@ -61,17 +69,22 @@ function buildPetContextMenu(): Menu {
         { label: '让它睡觉', click: () => sendPetMenuAction('sleep') },
         { label: '唤醒猫猫', click: () => sendPetMenuAction('wake') },
         { type: 'separator' },
+        { label: '向左走动', click: () => sendPetMenuAction('walkLeft') },
+        { label: '向右走动', click: () => sendPetMenuAction('walkRight') },
+        { type: 'separator' },
         {
-            label: '尺寸',
-            submenu: [
-                { label: '小', type: 'radio', checked: s.petSize === 'small', click: () => applyAndBroadcastSettings({ petSize: 'small' }) },
-                { label: '中', type: 'radio', checked: s.petSize === 'medium', click: () => applyAndBroadcastSettings({ petSize: 'medium' }) },
-                { label: '大', type: 'radio', checked: s.petSize === 'large', click: () => applyAndBroadcastSettings({ petSize: 'large' }) },
-            ],
+            label: '调整尺寸...',
+            click: () => sendPetMenuAction('openSizePanel'),
         },
         {
             label: `气泡：${s.speechBubbleEnabled ? '开' : '关'}`,
             click: () => applyAndBroadcastSettings({ speechBubbleEnabled: !s.speechBubbleEnabled }),
+        },
+        {
+            label: '随机行为',
+            type: 'checkbox',
+            checked: s.randomBehaviorEnabled,
+            click: () => applyAndBroadcastSettings({ randomBehaviorEnabled: !s.randomBehaviorEnabled }),
         },
         {
             label: `始终置顶：${s.alwaysOnTop ? '开' : '关'}`,
@@ -97,6 +110,7 @@ function buildPetContextMenu(): Menu {
 }
 
 function buildTrayMenu(): Menu {
+    const s = settingsService.load();
     return Menu.buildFromTemplate([
         {
             label: mainWindow?.isVisible() ? '隐藏猫猫' : '显示猫猫',
@@ -113,6 +127,12 @@ function buildTrayMenu(): Menu {
         },
         { label: '摸摸猫猫', click: () => sendPetMenuAction('pet') },
         { label: '让它睡觉', click: () => sendPetMenuAction('sleep') },
+        {
+            label: '随机行为',
+            type: 'checkbox',
+            checked: s.randomBehaviorEnabled,
+            click: () => applyAndBroadcastSettings({ randomBehaviorEnabled: !s.randomBehaviorEnabled }),
+        },
         { type: 'separator' },
         { label: '退出', click: () => app.quit() },
     ]);
@@ -164,25 +184,37 @@ interface DragState {
 }
 let dragState: DragState | null = null;
 
-ipcMain.handle('window:drag-start', () => {
+ipcMain.handle('window:drag-start', (_event, mouseScreenX: number, mouseScreenY: number) => {
     if (!mainWindow || mainWindow.isDestroyed()) return;
-    const initialMousePos = screen.getCursorScreenPoint();
     const [wx, wy] = mainWindow.getPosition();
-    dragState = { initialMousePos, initialWindowPos: [wx, wy] };
+    dragState = { initialMousePos: { x: mouseScreenX, y: mouseScreenY }, initialWindowPos: [wx, wy] };
 });
 
 // Fire-and-forget: renderer sends on every mousemove, no response needed
-ipcMain.on('window:drag-move', () => {
+ipcMain.on('window:drag-move', (_event, mouseScreenX: number, mouseScreenY: number) => {
     if (!mainWindow || mainWindow.isDestroyed() || !dragState) return;
-    const cur = screen.getCursorScreenPoint();
     mainWindow.setPosition(
-        Math.round(dragState.initialWindowPos[0] + cur.x - dragState.initialMousePos.x),
-        Math.round(dragState.initialWindowPos[1] + cur.y - dragState.initialMousePos.y),
+        Math.round(dragState.initialWindowPos[0] + mouseScreenX - dragState.initialMousePos.x),
+        Math.round(dragState.initialWindowPos[1] + mouseScreenY - dragState.initialMousePos.y),
     );
 });
 
 ipcMain.handle('window:drag-end', () => {
     dragState = null;
+});
+
+ipcMain.handle('window:get-position', () => {
+    return mainWindow?.getPosition() ?? [0, 0];
+});
+
+ipcMain.handle('window:set-position', (_event, x: number, y: number) => {
+    mainWindow?.setPosition(Math.round(x), Math.round(y));
+});
+
+ipcMain.handle('window:get-work-area', () => {
+    if (!mainWindow) return { x: 0, y: 0, width: 1280, height: 800 };
+    const bounds = mainWindow.getBounds();
+    return screen.getDisplayMatching(bounds).workArea;
 });
 
 // This method will be called when Electron has finished

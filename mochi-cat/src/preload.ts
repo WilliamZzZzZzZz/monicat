@@ -2,13 +2,31 @@
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
+import type { ExternalWindowBounds, SpriteRectInWindow, WindowBounds } from './types/ipc';
 
 contextBridge.exposeInMainWorld('mochiCat', {
     window: {
-        dragStart: (): Promise<void> => ipcRenderer.invoke('window:drag-start'),
+        dragStart: (mouseScreenX: number, mouseScreenY: number, spriteRect: SpriteRectInWindow): Promise<void> =>
+            ipcRenderer.invoke('window:drag-start', mouseScreenX, mouseScreenY, spriteRect),
         // Fire-and-forget on every mousemove — no await needed
-        dragMove: (): void => ipcRenderer.send('window:drag-move'),
+        dragMove: (mouseScreenX: number, mouseScreenY: number): void =>
+            ipcRenderer.send('window:drag-move', mouseScreenX, mouseScreenY),
         dragEnd: (): Promise<void> => ipcRenderer.invoke('window:drag-end'),
+        onVisibilityChanged: (callback: (visible: boolean) => void): (() => void) => {
+            const listener = (_event: IpcRendererEvent, visible: boolean) => callback(visible);
+            ipcRenderer.on('window:visibility-changed', listener);
+            return () => ipcRenderer.removeListener('window:visibility-changed', listener);
+        },
+        getPosition: (): Promise<[number, number]> => ipcRenderer.invoke('window:get-position'),
+        getBounds: (): Promise<WindowBounds> => ipcRenderer.invoke('window:get-bounds'),
+        setPosition: (x: number, y: number): Promise<void> => ipcRenderer.invoke('window:set-position', x, y),
+        getWorkArea: (): Promise<{ x: number; y: number; width: number; height: number }> =>
+            ipcRenderer.invoke('window:get-work-area'),
+        getDisplayBounds: (): Promise<WindowBounds> => ipcRenderer.invoke('window:get-display-bounds'),
+    },
+    externalWindows: {
+        getVisibleWindows: (): Promise<ExternalWindowBounds[]> =>
+            ipcRenderer.invoke('external-windows:get-visible-windows'),
     },
     menu: {
         openPetMenu: (): Promise<void> => ipcRenderer.invoke('menu:open-pet-menu'),

@@ -1,21 +1,29 @@
 export { };
 
-type PetMenuAction = 'pet' | 'feed' | 'sleep' | 'wake';
+import type { ExternalWindowBounds, SpriteRectInWindow, UserSettings, WindowBounds } from './ipc';
 
-export interface UserSettings {
-    petSize: 'small' | 'medium' | 'large';
-    alwaysOnTop: boolean;
-    speechBubbleEnabled: boolean;
-    randomBehaviorEnabled: boolean;
-}
+type PetMenuAction = 'pet' | 'feed' | 'sleep' | 'wake' | 'openSizePanel' | 'walkLeft' | 'walkRight';
 
 declare global {
     interface Window {
         mochiCat: {
             window: {
-                dragStart: () => Promise<void>;
-                dragMove: () => void;
+                dragStart: (
+                    mouseScreenX: number,
+                    mouseScreenY: number,
+                    spriteRect: SpriteRectInWindow
+                ) => Promise<void>;
+                dragMove: (mouseScreenX: number, mouseScreenY: number) => void;
                 dragEnd: () => Promise<void>;
+                onVisibilityChanged: (callback: (visible: boolean) => void) => () => void;
+                getPosition: () => Promise<[number, number]>;
+                getBounds: () => Promise<WindowBounds>;
+                setPosition: (x: number, y: number) => Promise<void>;
+                getWorkArea: () => Promise<{ x: number; y: number; width: number; height: number }>;
+                getDisplayBounds: () => Promise<WindowBounds>;
+            };
+            externalWindows: {
+                getVisibleWindows: () => Promise<ExternalWindowBounds[]>;
             };
             menu: {
                 openPetMenu: () => Promise<void>;

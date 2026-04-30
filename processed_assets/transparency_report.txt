@@ -135,3 +135,96 @@ Border remnants : 0.0%
 ----------------------------------------
 
 Summary: 12 PASS / 0 FAIL  (total 12)
+
+
+==============================
+Walking Frames — Phase 8
+==============================
+
+File            : processed_assets/cat/walk_right/walk_right_000.png (walk_right)
+Status          : PASS
+Size            : 1254x1254
+Mode            : RGBA
+Transparent px  : 82.1%
+Semi-trans px   : 2.58%
+Border remnants : 0.0%
+  [transparent>=30%] : ✓
+  [remnants<10%]     : ✓
+----------------------------------------
+
+File            : processed_assets/cat/walk_left/walk_left_000.png (walk_left mirror)
+Status          : PASS
+Size            : 1254x1254
+Mode            : RGBA
+Transparent px  : 82.1%
+Semi-trans px   : 2.58%
+Border remnants : 0.0%
+  [transparent>=30%] : ✓
+  [remnants<10%]     : ✓
+----------------------------------------
+
+File            : processed_assets/cat/walk_right/walk_right_001.png (walk_right)
+Status          : PASS
+Size            : 1254x1254
+Mode            : RGBA
+Transparent px  : 81.7%
+Semi-trans px   : 2.54%
+Border remnants : 0.0%
+  [transparent>=30%] : ✓
+  [remnants<10%]     : ✓
+----------------------------------------
+
+File            : processed_assets/cat/walk_left/walk_left_001.png (walk_left mirror)
+Status          : PASS
+Size            : 1254x1254
+Mode            : RGBA
+Transparent px  : 81.7%
+Semi-trans px   : 2.54%
+Border remnants : 0.0%
+  [transparent>=30%] : ✓
+  [remnants<10%]     : ✓
+----------------------------------------
+
+File            : processed_assets/cat/walk_right/walk_right_002.png (walk_right)
+Status          : PASS
+Size            : 1254x1254
+Mode            : RGBA
+Transparent px  : 80.8%
+Semi-trans px   : 2.61%
+Border remnants : 0.0%
+  [transparent>=30%] : ✓
+  [remnants<10%]     : ✓
+----------------------------------------
+
+File            : processed_assets/cat/walk_left/walk_left_002.png (walk_left mirror)
+Status          : PASS
+Size            : 1254x1254
+Mode            : RGBA
+Transparent px  : 80.8%
+Semi-trans px   : 2.61%
+Border remnants : 0.0%
+  [transparent>=30%] : ✓
+  [remnants<10%]     : ✓
+----------------------------------------
+
+File            : processed_assets/cat/walk_right/walk_right_003.png (walk_right)
+Status          : PASS
+Size            : 1254x1254
+Mode            : RGBA
+Transparent px  : 82.2%
+Semi-trans px   : 2.44%
+Border remnants : 0.0%
+  [transparent>=30%] : ✓
+  [remnants<10%]     : ✓
+----------------------------------------
+
+File            : processed_assets/cat/walk_left/walk_left_003.png (walk_left mirror)
+Status          : PASS
+Size            : 1254x1254
+Mode            : RGBA
+Transparent px  : 82.2%
+Semi-trans px   : 2.44%
+Border remnants : 0.0%
+  [transparent>=30%] : ✓
+  [remnants<10%]     : ✓
+----------------------------------------

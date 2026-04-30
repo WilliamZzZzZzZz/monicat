@@ -18,6 +18,16 @@ const sleeping000 = new URL('../assets/cat/sleeping/sleeping_000.png', import.me
 const sleeping001 = new URL('../assets/cat/sleeping/sleeping_001.png', import.meta.url).href;
 const sleeping002 = new URL('../assets/cat/sleeping/sleeping_002.png', import.meta.url).href;
 
+const walkRight000 = new URL('../assets/cat/walk_right/walk_right_000.png', import.meta.url).href;
+const walkRight001 = new URL('../assets/cat/walk_right/walk_right_001.png', import.meta.url).href;
+const walkRight002 = new URL('../assets/cat/walk_right/walk_right_002.png', import.meta.url).href;
+const walkRight003 = new URL('../assets/cat/walk_right/walk_right_003.png', import.meta.url).href;
+
+const walkLeft000 = new URL('../assets/cat/walk_left/walk_left_000.png', import.meta.url).href;
+const walkLeft001 = new URL('../assets/cat/walk_left/walk_left_001.png', import.meta.url).href;
+const walkLeft002 = new URL('../assets/cat/walk_left/walk_left_002.png', import.meta.url).href;
+const walkLeft003 = new URL('../assets/cat/walk_left/walk_left_003.png', import.meta.url).href;
+
 export const animationConfig: AnimationConfig = {
     idle: {
         fps: 4,
@@ -38,5 +48,15 @@ export const animationConfig: AnimationConfig = {
         fps: 3,
         loop: true,
         frames: [sleeping000, sleeping001, sleeping002],
+    },
+    walk_right: {
+        fps: 7,
+        loop: true,
+        frames: [walkRight000, walkRight001, walkRight002, walkRight003],
+    },
+    walk_left: {
+        fps: 7,
+        loop: true,
+        frames: [walkLeft000, walkLeft001, walkLeft002, walkLeft003],
     },
 };
