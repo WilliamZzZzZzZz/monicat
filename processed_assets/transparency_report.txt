@@ -1,0 +1,137 @@
+MochiCat Transparency Verification Report
+============================================================
+
+File            : processed_assets/cat/idle/idle_000.png
+Status          : PASS
+Size            : 1122x1402
+Mode            : RGBA
+Alpha channel   : True
+Transparent px  : 69.6%
+Semi-trans px   : 1.98%
+Border remnants : 0.0%
+  [transparent>=30%] : ✓
+  [remnants<10%]     : ✓
+----------------------------------------
+File            : processed_assets/cat/idle/idle_001.png
+Status          : PASS
+Size            : 1122x1402
+Mode            : RGBA
+Alpha channel   : True
+Transparent px  : 69.5%
+Semi-trans px   : 1.98%
+Border remnants : 0.0%
+  [transparent>=30%] : ✓
+  [remnants<10%]     : ✓
+----------------------------------------
+File            : processed_assets/cat/idle/idle_002.png
+Status          : PASS
+Size            : 1122x1402
+Mode            : RGBA
+Alpha channel   : True
+Transparent px  : 69.8%
+Semi-trans px   : 1.97%
+Border remnants : 0.0%
+  [transparent>=30%] : ✓
+  [remnants<10%]     : ✓
+----------------------------------------
+File            : processed_assets/cat/dragging/dragging_000.png
+Status          : PASS
+Size            : 1122x1402
+Mode            : RGBA
+Alpha channel   : True
+Transparent px  : 81.7%
+Semi-trans px   : 2.10%
+Border remnants : 0.0%
+  [transparent>=30%] : ✓
+  [remnants<10%]     : ✓
+----------------------------------------
+File            : processed_assets/cat/dragging/dragging_001.png
+Status          : PASS
+Size            : 1122x1402
+Mode            : RGBA
+Alpha channel   : True
+Transparent px  : 82.0%
+Semi-trans px   : 2.28%
+Border remnants : 0.0%
+  [transparent>=30%] : ✓
+  [remnants<10%]     : ✓
+----------------------------------------
+File            : processed_assets/cat/dragging/dragging_002.png
+Status          : PASS
+Size            : 1122x1402
+Mode            : RGBA
+Alpha channel   : True
+Transparent px  : 82.6%
+Semi-trans px   : 2.25%
+Border remnants : 0.0%
+  [transparent>=30%] : ✓
+  [remnants<10%]     : ✓
+----------------------------------------
+File            : processed_assets/cat/happy/happy_000.png
+Status          : PASS
+Size            : 1122x1402
+Mode            : RGBA
+Alpha channel   : True
+Transparent px  : 68.8%
+Semi-trans px   : 2.22%
+Border remnants : 0.0%
+  [transparent>=30%] : ✓
+  [remnants<10%]     : ✓
+----------------------------------------
+File            : processed_assets/cat/happy/happy_001.png
+Status          : PASS
+Size            : 1122x1402
+Mode            : RGBA
+Alpha channel   : True
+Transparent px  : 68.6%
+Semi-trans px   : 2.19%
+Border remnants : 0.0%
+  [transparent>=30%] : ✓
+  [remnants<10%]     : ✓
+----------------------------------------
+File            : processed_assets/cat/happy/happy_002.png
+Status          : PASS
+Size            : 1122x1402
+Mode            : RGBA
+Alpha channel   : True
+Transparent px  : 71.6%
+Semi-trans px   : 2.11%
+Border remnants : 0.0%
+  [transparent>=30%] : ✓
+  [remnants<10%]     : ✓
+----------------------------------------
+File            : processed_assets/cat/sleeping/sleeping_000.png
+Status          : PASS
+Size            : 1122x1402
+Mode            : RGBA
+Alpha channel   : True
+Transparent px  : 72.8%
+Semi-trans px   : 1.49%
+Border remnants : 0.0%
+  [transparent>=30%] : ✓
+  [remnants<10%]     : ✓
+----------------------------------------
+File            : processed_assets/cat/sleeping/sleeping_001.png
+Status          : PASS
+Size            : 1122x1402
+Mode            : RGBA
+Alpha channel   : True
+Transparent px  : 72.7%
+Semi-trans px   : 1.47%
+Border remnants : 0.0%
+  [transparent>=30%] : ✓
+  [remnants<10%]     : ✓
+----------------------------------------
+File            : processed_assets/cat/sleeping/sleeping_002.png
+Status          : PASS
+Size            : 1122x1402
+Mode            : RGBA
+Alpha channel   : True
+Transparent px  : 72.7%
+Semi-trans px   : 1.49%
+Border remnants : 0.0%
+  [transparent>=30%] : ✓
+  [remnants<10%]     : ✓
+----------------------------------------
+
+Summary: 12 PASS / 0 FAIL  (total 12)

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+  <!-- Cat ears -->
+  <polygon points="2,9 5,2 8,9" fill="#333"/>
+  <polygon points="10,9 13,2 16,9" fill="#333"/>
+  <!-- Cat head -->
+  <circle cx="9" cy="11" r="6" fill="#333"/>
+  <!-- Eyes -->
+  <circle cx="7" cy="10" r="1.2" fill="white"/>
+  <circle cx="11" cy="10" r="1.2" fill="white"/>
+  <!-- Nose -->
+  <circle cx="9" cy="12.5" r="0.8" fill="white" opacity="0.7"/>
+</svg>

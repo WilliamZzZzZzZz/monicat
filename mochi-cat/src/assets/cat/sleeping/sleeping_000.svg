@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+  <!-- Tail (drooping) -->
+  <path d="M 208 256 Q 248 260 252 240 Q 256 220 240 218" fill="none" stroke="#5C4B3A" stroke-width="10" stroke-linecap="round"/>
+  <!-- Body -->
+  <ellipse cx="150" cy="252" rx="70" ry="46" fill="#F2EBE0" stroke="#5C4B3A" stroke-width="2"/>
+  <!-- Head -->
+  <circle cx="150" cy="158" r="88" fill="#F2EBE0" stroke="#5C4B3A" stroke-width="2"/>
+  <!-- Left Ear -->
+  <polygon points="88,96 80,34 130,74" fill="#F2EBE0" stroke="#5C4B3A" stroke-width="2"/>
+  <polygon points="91,88 85,48 126,74" fill="#FFB3C6"/>
+  <!-- Right Ear -->
+  <polygon points="212,96 220,34 170,74" fill="#F2EBE0" stroke="#5C4B3A" stroke-width="2"/>
+  <polygon points="209,88 215,48 174,74" fill="#FFB3C6"/>
+  <!-- Left Eye (droopy closed — downward arc) -->
+  <path d="M 100,152 Q 118,158 136,152" fill="none" stroke="#5C4B3A" stroke-width="3" stroke-linecap="round"/>
+  <!-- Right Eye (droopy closed — downward arc) -->
+  <path d="M 164,152 Q 182,158 200,152" fill="none" stroke="#5C4B3A" stroke-width="3" stroke-linecap="round"/>
+  <!-- Nose -->
+  <polygon points="150,178 143,171 157,171" fill="#FF9BB5"/>
+  <!-- Small open mouth -->
+  <ellipse cx="150" cy="187" rx="7" ry="5" fill="none" stroke="#5C4B3A" stroke-width="1.5"/>
+  <!-- Left Whiskers -->
+  <line x1="62" y1="168" x2="128" y2="173" stroke="#5C4B3A" stroke-width="1.2" opacity="0.45"/>
+  <line x1="60" y1="178" x2="128" y2="179" stroke="#5C4B3A" stroke-width="1.2" opacity="0.45"/>
+  <line x1="62" y1="188" x2="128" y2="185" stroke="#5C4B3A" stroke-width="1.2" opacity="0.45"/>
+  <!-- Right Whiskers -->
+  <line x1="238" y1="168" x2="172" y2="173" stroke="#5C4B3A" stroke-width="1.2" opacity="0.45"/>
+  <line x1="240" y1="178" x2="172" y2="179" stroke="#5C4B3A" stroke-width="1.2" opacity="0.45"/>
+  <line x1="238" y1="188" x2="172" y2="185" stroke="#5C4B3A" stroke-width="1.2" opacity="0.45"/>
+  <!-- Zzz (small) -->
+  <text x="200" y="116" font-size="18" font-family="sans-serif" fill="#7BA7D4" font-weight="bold" opacity="0.85">z</text>
+  <text x="218" y="96" font-size="24" font-family="sans-serif" fill="#7BA7D4" font-weight="bold" opacity="0.85">z</text>
+  <text x="238" y="73" font-size="30" font-family="sans-serif" fill="#7BA7D4" font-weight="bold" opacity="0.85">Z</text>
+</svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+  <!-- Tail -->
+  <path d="M 208 252 Q 255 228 251 188 Q 247 162 230 167" fill="none" stroke="#5C4B3A" stroke-width="10" stroke-linecap="round"/>
+  <!-- Body -->
+  <ellipse cx="150" cy="252" rx="70" ry="46" fill="#F2EBE0" stroke="#5C4B3A" stroke-width="2"/>
+  <!-- Head -->
+  <circle cx="150" cy="158" r="88" fill="#F2EBE0" stroke="#5C4B3A" stroke-width="2"/>
+  <!-- Left Ear -->
+  <polygon points="88,96 80,34 130,74" fill="#F2EBE0" stroke="#5C4B3A" stroke-width="2"/>
+  <polygon points="91,88 85,48 126,74" fill="#FFB3C6"/>
+  <!-- Right Ear -->
+  <polygon points="212,96 220,34 170,74" fill="#F2EBE0" stroke="#5C4B3A" stroke-width="2"/>
+  <polygon points="209,88 215,48 174,74" fill="#FFB3C6"/>
+  <!-- Left Eye -->
+  <ellipse cx="118" cy="152" rx="18" ry="19" fill="white" stroke="#5C4B3A" stroke-width="1.5"/>
+  <ellipse cx="119" cy="153" rx="11" ry="13" fill="#3A2A1E"/>
+  <circle cx="122" cy="149" r="4" fill="white"/>
+  <!-- Right Eye -->
+  <ellipse cx="182" cy="152" rx="18" ry="19" fill="white" stroke="#5C4B3A" stroke-width="1.5"/>
+  <ellipse cx="183" cy="153" rx="11" ry="13" fill="#3A2A1E"/>
+  <circle cx="186" cy="149" r="4" fill="white"/>
+  <!-- Nose -->
+  <polygon points="150,178 143,171 157,171" fill="#FF9BB5"/>
+  <line x1="150" y1="178" x2="150" y2="183" stroke="#5C4B3A" stroke-width="1"/>
+  <!-- Mouth -->
+  <path d="M 143,183 Q 150,190 157,183" fill="none" stroke="#5C4B3A" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Left Whiskers -->
+  <line x1="62" y1="168" x2="128" y2="173" stroke="#5C4B3A" stroke-width="1.2" opacity="0.55"/>
+  <line x1="60" y1="178" x2="128" y2="179" stroke="#5C4B3A" stroke-width="1.2" opacity="0.55"/>
+  <line x1="62" y1="188" x2="128" y2="185" stroke="#5C4B3A" stroke-width="1.2" opacity="0.55"/>
+  <!-- Right Whiskers -->
+  <line x1="238" y1="168" x2="172" y2="173" stroke="#5C4B3A" stroke-width="1.2" opacity="0.55"/>
+  <line x1="240" y1="178" x2="172" y2="179" stroke="#5C4B3A" stroke-width="1.2" opacity="0.55"/>
+  <line x1="238" y1="188" x2="172" y2="185" stroke="#5C4B3A" stroke-width="1.2" opacity="0.55"/>
+</svg>
