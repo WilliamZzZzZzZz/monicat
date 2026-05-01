@@ -1,6 +1,6 @@
 export { };
 
-import type { ExternalWindowBounds, SpriteRectInWindow, UserSettings, WindowBounds } from './ipc';
+import type { UserSettings } from './ipc';
 
 type PetMenuAction = 'pet' | 'feed' | 'sleep' | 'wake' | 'openSizePanel' | 'walkLeft' | 'walkRight';
 
@@ -10,20 +10,15 @@ declare global {
             window: {
                 dragStart: (
                     mouseScreenX: number,
-                    mouseScreenY: number,
-                    spriteRect: SpriteRectInWindow
+                    mouseScreenY: number
                 ) => Promise<void>;
                 dragMove: (mouseScreenX: number, mouseScreenY: number) => void;
                 dragEnd: () => Promise<void>;
                 onVisibilityChanged: (callback: (visible: boolean) => void) => () => void;
                 getPosition: () => Promise<[number, number]>;
-                getBounds: () => Promise<WindowBounds>;
                 setPosition: (x: number, y: number) => Promise<void>;
                 getWorkArea: () => Promise<{ x: number; y: number; width: number; height: number }>;
-                getDisplayBounds: () => Promise<WindowBounds>;
-            };
-            externalWindows: {
-                getVisibleWindows: () => Promise<ExternalWindowBounds[]>;
+                getBounds: () => Promise<{ x: number; y: number; width: number; height: number }>;
             };
             menu: {
                 openPetMenu: () => Promise<void>;

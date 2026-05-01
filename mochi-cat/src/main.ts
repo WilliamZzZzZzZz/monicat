@@ -217,6 +217,10 @@ ipcMain.handle('window:get-work-area', () => {
     return screen.getDisplayMatching(bounds).workArea;
 });
 
+ipcMain.handle('window:get-bounds', () => {
+    return mainWindow?.getBounds() ?? { x: 0, y: 0, width: 300, height: 300 };
+});
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.

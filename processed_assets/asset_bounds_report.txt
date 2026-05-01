@@ -1,0 +1,43 @@
+MochiCat Asset Bounds Report
+============================================================
+
+State: idle
+----------------------------------------
+  idle_000.png: 1122x1402  bbox=(196,32)-(855,1268)  margins T=32 B=133 L=196 R=266  [PASS]
+  idle_001.png: 1122x1402  bbox=(187,33)-(845,1287)  margins T=33 B=114 L=187 R=276  [PASS]
+  idle_002.png: 1122x1402  bbox=(190,31)-(842,1284)  margins T=31 B=117 L=190 R=279  [PASS]
+
+State: happy
+----------------------------------------
+  happy_000.png: 1122x1402  bbox=(187,37)-(852,1330)  margins T=37 B=71 L=187 R=269  [PASS]
+  happy_001.png: 1122x1402  bbox=(177,26)-(821,1330)  margins T=26 B=71 L=177 R=300  [PASS]
+  happy_002.png: 1122x1402  bbox=(197,49)-(822,1290)  margins T=49 B=111 L=197 R=299  [PASS]
+
+State: sleeping
+----------------------------------------
+  sleeping_000.png: 1122x1402  bbox=(68,421)-(1060,1016)  margins T=421 B=385 L=68 R=61  [PASS]
+  sleeping_001.png: 1122x1402  bbox=(68,428)-(1060,1013)  margins T=428 B=388 L=68 R=61  [PASS]
+  sleeping_002.png: 1122x1402  bbox=(66,410)-(1060,1004)  margins T=410 B=397 L=66 R=61  [PASS]
+
+State: walk_left
+----------------------------------------
+  walk_left_000.png: 1254x1254  bbox=(103,234)-(1198,954)  margins T=234 B=299 L=103 R=55  [PASS]
+  walk_left_001.png: 1254x1254  bbox=(115,223)-(1212,968)  margins T=223 B=285 L=115 R=41  [PASS]
+  walk_left_002.png: 1254x1254  bbox=(105,230)-(1200,969)  margins T=230 B=284 L=105 R=53  [PASS]
+  walk_left_003.png: 1254x1254  bbox=(126,258)-(1208,979)  margins T=258 B=274 L=126 R=45  [PASS]
+
+State: walk_right
+----------------------------------------
+  walk_right_000.png: 1254x1254  bbox=(55,234)-(1150,954)  margins T=234 B=299 L=55 R=103  [PASS]
+  walk_right_001.png: 1254x1254  bbox=(41,223)-(1138,968)  margins T=223 B=285 L=41 R=115  [PASS]
+  walk_right_002.png: 1254x1254  bbox=(53,230)-(1148,969)  margins T=230 B=284 L=53 R=105  [PASS]
+  walk_right_003.png: 1254x1254  bbox=(45,258)-(1127,979)  margins T=258 B=274 L=45 R=126  [PASS]
+
+State: dragging
+----------------------------------------
+  dragging_000.png: 1122x1402  bbox=(296,55)-(773,1292)  margins T=55 B=109 L=296 R=348  [PASS]
+  dragging_001.png: 1122x1402  bbox=(288,57)-(772,1331)  margins T=57 B=70 L=288 R=349  [PASS]
+  dragging_002.png: 1122x1402  bbox=(291,56)-(770,1304)  margins T=56 B=97 L=291 R=351  [PASS]
+
+============================================================
+SUMMARY: All assets have sufficient margins.

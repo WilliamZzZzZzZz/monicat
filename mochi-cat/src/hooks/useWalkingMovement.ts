@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import type { PetState } from '../types/pet';
-import type { PerchMovementBounds } from '../types/ipc';
+import { DEBUG_WALKING } from '../debug/debugFlags';
 
 /** Walking speed in pixels per second */
 const WALK_SPEED_PX_PER_SEC = 35;
@@ -13,7 +13,6 @@ export interface UseWalkingMovementParams {
     petState: PetState;
     isDragging: boolean;
     isWindowVisible: boolean;
-    perchMovementBounds?: PerchMovementBounds | null;
     onWalkComplete: () => void;
 }
 
@@ -21,13 +20,12 @@ export interface UseWalkingMovementParams {
  * Drives the Electron window position while petState is walk_right or walk_left.
  * Uses requestAnimationFrame for smooth movement.
  * Stops immediately if dragging starts, window is hidden, or walk duration elapses.
- * Clamps position to perch bounds when perched, otherwise to the screen workArea.
+ * Clamps position to the screen workArea.
  */
 export function useWalkingMovement({
     petState,
     isDragging,
     isWindowVisible,
-    perchMovementBounds,
     onWalkComplete,
 }: UseWalkingMovementParams): void {
     const rafIdRef = useRef<number | null>(null);
@@ -56,23 +54,22 @@ export function useWalkingMovement({
         let workArea = { x: 0, y: 0, width: 1280, height: 800 };
         let windowWidth = 300;
         let cancelled = false;
-        const activePerchBounds = perchMovementBounds ?? null;
 
-        // Fetch initial position and workArea from main process asynchronously
+        // Fetch initial position, workArea, and real window bounds from main process
         Promise.all([
             window.mochiCat.window.getPosition(),
-            activePerchBounds ? Promise.resolve(workArea) : window.mochiCat.window.getWorkArea(),
-        ]).then(([pos, area]) => {
+            window.mochiCat.window.getWorkArea(),
+            window.mochiCat.window.getBounds(),
+        ]).then(([pos, area, bounds]) => {
             if (cancelled) return;
             startX = pos[0];
             workArea = area;
-            windowWidth = 300;
-            const minX = activePerchBounds ? activePerchBounds.minX : workArea.x;
-            const maxX = activePerchBounds
-                ? activePerchBounds.maxX
-                : workArea.x + workArea.width - windowWidth;
-            const movementY = activePerchBounds ? activePerchBounds.y : pos[1];
+            windowWidth = bounds.width;
+            const minX = workArea.x;
+            const maxX = workArea.x + workArea.width - windowWidth;
+            const movementY = pos[1];
             startX = Math.max(minX, Math.min(maxX, startX));
+            if (DEBUG_WALKING) console.debug('[walking] start', { startX, workArea, windowWidth, maxX, direction, duration });
 
             function frame(timestamp: number) {
                 if (cancelled) return;
@@ -90,6 +87,7 @@ export function useWalkingMovement({
                 const elapsed2 = timestamp - startTime;
                 if (elapsed2 >= duration || hitBoundary) {
                     // Walk finished
+                    if (DEBUG_WALKING) console.debug('[walking] done', { hitBoundary, elapsed: elapsed2 });
                     onWalkCompleteRef.current();
                     return;
                 }
@@ -114,8 +112,5 @@ export function useWalkingMovement({
         petState,
         isDragging,
         isWindowVisible,
-        perchMovementBounds?.minX,
-        perchMovementBounds?.maxX,
-        perchMovementBounds?.y,
     ]);
 }

@@ -6,6 +6,7 @@ import { PetSprite } from './components/PetSprite';
 import { useRandomBehavior } from './hooks/useRandomBehavior';
 import { useWalkingMovement } from './hooks/useWalkingMovement';
 import { SizeSliderPanel, PET_SIZE_DEFAULT } from './components/SizeSliderPanel';
+import { DEBUG_INTERACTION } from './debug/debugFlags';
 
 const DEFAULT_SETTINGS: UserSettings = {
     petSizePx: PET_SIZE_DEFAULT,
@@ -39,12 +40,21 @@ export default function App() {
     const inactivityTimerRef = useRef<number | null>(null);
     // Tracks latest petState for use inside timer callbacks
     const petStateRef = useRef<PetState>('idle');
-    // True only after actual mouse movement — used to distinguish click from drag
+    // True only after actual mouse movement — prevents drag-end from triggering dblclick happy
     const hasDraggedRef = useRef(false);
     // Random behavior: track last user interaction and when current state was entered
     const lastInteractionAtRef = useRef<number>(Date.now());
     const enteredStateAtRef = useRef<number>(Date.now());
     const [isWindowVisible, setIsWindowVisible] = useState(true);
+
+    // ---- Pointer interaction state ----------------------------------------
+    /** Minimum movement to confirm a drag (avoids accidental drags on plain clicks) */
+    const DRAG_START_THRESHOLD_PX = 4;
+    const pointerDownRef = useRef(false);
+    const pointerIdRef = useRef<number | null>(null);
+    /** True once movement has exceeded the drag threshold in the current press */
+    const dragStartedRef = useRef(false);
+    const dragStartScreenRef = useRef<{ x: number; y: number } | null>(null);
 
     const markUserInteraction = useCallback(() => {
         lastInteractionAtRef.current = Date.now();
@@ -150,66 +160,107 @@ export default function App() {
         return unsubscribe;
     }, [triggerHappy, triggerSleep, triggerWalkLeft, triggerWalkRight, markUserInteraction]);
 
-    const handleMouseDown = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handlePointerDown = useCallback((event: React.PointerEvent<HTMLButtonElement>) => {
         if (event.button !== 0) return;
         event.preventDefault();
         markUserInteraction();
-        hasDraggedRef.current = false; // reset — dragging only confirmed after mousemove
-        await window.mochiCat.window.dragStart(event.screenX, event.screenY);
-        setIsDragging(true);
-    };
+        hasDraggedRef.current = false;
+        pointerDownRef.current = true;
+        pointerIdRef.current = event.pointerId;
+        dragStartedRef.current = false;
+        dragStartScreenRef.current = { x: event.screenX, y: event.screenY };
+        // Pointer capture: pointer events continue to reach this element even when
+        // the pointer moves outside it or the window.
+        event.currentTarget.setPointerCapture(event.pointerId);
+        // Start drag tracking in the main process immediately — no await so we don't
+        // delay setting up the interaction chain.
+        if (DEBUG_INTERACTION) console.debug('[interaction] pointerdown', event.screenX, event.screenY);
+        void window.mochiCat.window.dragStart(event.screenX, event.screenY);
+    }, [markUserInteraction]);
 
-    // Double-click: only fire if no actual movement occurred (not a drag)
-    const handleDoubleClick = () => {
+    const handlePointerMove = useCallback((event: React.PointerEvent<HTMLButtonElement>) => {
+        if (!pointerDownRef.current || pointerIdRef.current !== event.pointerId) return;
+        if (!dragStartScreenRef.current) return;
+        const dx = event.screenX - dragStartScreenRef.current.x;
+        const dy = event.screenY - dragStartScreenRef.current.y;
+        if (!dragStartedRef.current) {
+            if (Math.sqrt(dx * dx + dy * dy) < DRAG_START_THRESHOLD_PX) return;
+            // Threshold exceeded — confirm drag
+            dragStartedRef.current = true;
+            hasDraggedRef.current = true;
+            setIsDragging(true);
+            petStateRef.current = 'dragging';
+            setPetState('dragging');
+            showBubble('别拎我！');
+            resetInactivityTimer();
+            if (DEBUG_INTERACTION) console.debug('[interaction] drag confirmed');
+        }
+        window.mochiCat.window.dragMove(event.screenX, event.screenY);
+    }, [showBubble, resetInactivityTimer]);
+
+    const endDrag = useCallback(async (didDrag: boolean) => {
+        setIsDragging(false);
+        await window.mochiCat.window.dragEnd();
+        markUserInteraction();
+        if (didDrag) {
+            petStateRef.current = 'idle';
+            setPetState('idle');
+        }
+        resetInactivityTimer();
+    }, [markUserInteraction, resetInactivityTimer]);
+
+    const handlePointerUp = useCallback(async (event: React.PointerEvent<HTMLButtonElement>) => {
+        if (!pointerDownRef.current || pointerIdRef.current !== event.pointerId) return;
+        const didDrag = dragStartedRef.current;
+        // Reset state before any await so re-entrant events are ignored
+        pointerDownRef.current = false;
+        pointerIdRef.current = null;
+        dragStartedRef.current = false;
+        dragStartScreenRef.current = null;
+        if (DEBUG_INTERACTION) console.debug('[interaction] pointerup  didDrag=', didDrag);
+        await endDrag(didDrag);
+    }, [endDrag]);
+
+    const handlePointerCancel = useCallback(async (event: React.PointerEvent<HTMLButtonElement>) => {
+        if (!pointerDownRef.current) return;
+        if (pointerIdRef.current !== null && pointerIdRef.current !== event.pointerId) return;
+        const didDrag = dragStartedRef.current;
+        pointerDownRef.current = false;
+        pointerIdRef.current = null;
+        dragStartedRef.current = false;
+        dragStartScreenRef.current = null;
+        if (DEBUG_INTERACTION) console.debug('[interaction] pointercancel  didDrag=', didDrag);
+        await endDrag(didDrag);
+    }, [endDrag]);
+
+    // Safety net: if the app window loses focus while dragging, cancel the drag
+    useEffect(() => {
+        const onBlur = async () => {
+            if (!pointerDownRef.current) return;
+            const didDrag = dragStartedRef.current;
+            pointerDownRef.current = false;
+            pointerIdRef.current = null;
+            dragStartedRef.current = false;
+            dragStartScreenRef.current = null;
+            if (DEBUG_INTERACTION) console.debug('[interaction] window blur — cancelling drag');
+            await endDrag(didDrag);
+        };
+        window.addEventListener('blur', onBlur);
+        return () => window.removeEventListener('blur', onBlur);
+    }, [endDrag]);
+
+    // Double-click: only fire happy if no drag occurred during this press
+    const handleDoubleClick = useCallback(() => {
         if (hasDraggedRef.current) return;
         markUserInteraction();
         triggerHappy(petStateRef.current === 'sleeping' ? '醒啦！' : undefined);
-    };
+    }, [markUserInteraction, triggerHappy]);
 
-    useEffect(() => {
-        const handleMouseMove = (event: MouseEvent) => {
-            // Enter dragging state on first move only
-            if (!hasDraggedRef.current) {
-                hasDraggedRef.current = true;
-                petStateRef.current = 'dragging';
-                setPetState('dragging');
-                showBubble('别拎我！');
-                resetInactivityTimer();
-            }
-            window.mochiCat.window.dragMove(event.screenX, event.screenY);
-        };
-
-        const stopDragging = async () => {
-            // Capture BEFORE await — dblclick may fire and set happy between mouseup and dragEnd resolution
-            const didDrag = hasDraggedRef.current;
-            hasDraggedRef.current = false;
-            await window.mochiCat.window.dragEnd();
-            setIsDragging(false);
-            markUserInteraction();
-            if (didDrag) {
-                // Only reset to idle when actual movement happened; pure clicks must not overwrite happy
-                petStateRef.current = 'idle';
-                setPetState('idle');
-            }
-            resetInactivityTimer();
-        };
-
-        if (isDragging) {
-            window.addEventListener('mousemove', handleMouseMove);
-            window.addEventListener('mouseup', stopDragging);
-        }
-
-        return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('mouseup', stopDragging);
-        };
-    }, [isDragging, showBubble, resetInactivityTimer, markUserInteraction]);
-
-    const handleContextMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleContextMenu = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         markUserInteraction();
         void window.mochiCat.menu.openPetMenu();
-    };
+    }, [markUserInteraction]);
 
     useWalkingMovement({
         petState,
@@ -222,6 +273,7 @@ export default function App() {
         petState,
         randomBehaviorEnabled: settings.randomBehaviorEnabled,
         isWindowVisible,
+        isSizePanelOpen,
         lastInteractionAtRef,
         enteredStateAtRef,
         triggerHappy,
@@ -239,7 +291,10 @@ export default function App() {
                 <SpeechBubble text={bubbleText} visible={bubbleText !== null} />
                 <PetSprite
                     state={petState}
-                    onMouseDown={handleMouseDown}
+                    onPointerDown={handlePointerDown}
+                    onPointerMove={handlePointerMove}
+                    onPointerUp={handlePointerUp}
+                    onPointerCancel={handlePointerCancel}
                     onDoubleClick={handleDoubleClick}
                     onContextMenu={handleContextMenu}
                 />

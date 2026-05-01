@@ -73,7 +73,11 @@ body {
 }
 
 .pet-sprite-button.pet-happy {
-    transform: scale(1.08) translateY(-6px);
+    /* No scale — scale pushes ears above the window boundary at max pet size.
+       A subtle upward nudge is safe because the cat content starts ~25–50 px
+       from the image top (well within the transparent padding). */
+    transform: translateY(-3px);
+    filter: brightness(1.03);
 }
 
 .pet-sprite-button.pet-sleeping {
