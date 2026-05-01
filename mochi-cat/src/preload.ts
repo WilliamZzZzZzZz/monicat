@@ -2,6 +2,7 @@
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
+import type { PetMenuAction, UserSettings } from './types/ipc';
 
 contextBridge.exposeInMainWorld('mochiCat', {
     window: {
@@ -27,19 +28,19 @@ contextBridge.exposeInMainWorld('mochiCat', {
         openPetMenu: (): Promise<void> => ipcRenderer.invoke('menu:open-pet-menu'),
     },
     pet: {
-        onMenuAction: (callback: (action: string) => void): (() => void) => {
-            const listener = (_event: IpcRendererEvent, action: string) => callback(action);
+        onMenuAction: (callback: (action: PetMenuAction) => void): (() => void) => {
+            const listener = (_event: IpcRendererEvent, action: PetMenuAction) => callback(action);
             ipcRenderer.on('pet:menu-action', listener);
             return () => ipcRenderer.removeListener('pet:menu-action', listener);
         },
     },
     settings: {
-        get: (): Promise<unknown> => ipcRenderer.invoke('settings:get'),
-        update: (partial: Record<string, unknown>): Promise<unknown> =>
+        get: (): Promise<UserSettings> => ipcRenderer.invoke('settings:get') as Promise<UserSettings>,
+        update: (partial: Partial<UserSettings>): Promise<UserSettings> =>
             ipcRenderer.invoke('settings:update', partial),
-        reset: (): Promise<unknown> => ipcRenderer.invoke('settings:reset'),
-        onChange: (callback: (settings: unknown) => void): (() => void) => {
-            const listener = (_event: IpcRendererEvent, settings: unknown) => callback(settings);
+        reset: (): Promise<UserSettings> => ipcRenderer.invoke('settings:reset') as Promise<UserSettings>,
+        onChange: (callback: (settings: UserSettings) => void): (() => void) => {
+            const listener = (_event: IpcRendererEvent, settings: UserSettings) => callback(settings);
             ipcRenderer.on('settings:changed', listener);
             return () => ipcRenderer.removeListener('settings:changed', listener);
         },

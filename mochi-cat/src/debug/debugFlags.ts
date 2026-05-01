@@ -12,3 +12,6 @@ export const DEBUG_WALKING = import.meta.env.DEV && false;
 
 /** Log random behavior scheduling, cooldown skips, and chosen actions */
 export const DEBUG_RANDOM = import.meta.env.DEV && false;
+
+/** Log menu actions and state transitions */
+export const DEBUG_STATE_MACHINE = import.meta.env.DEV && false;

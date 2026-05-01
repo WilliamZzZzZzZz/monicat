@@ -1,8 +1,6 @@
 export { };
 
-import type { UserSettings } from './ipc';
-
-type PetMenuAction = 'pet' | 'feed' | 'sleep' | 'wake' | 'openSizePanel' | 'walkLeft' | 'walkRight';
+import type { PetMenuAction, UserSettings } from './ipc';
 
 declare global {
     interface Window {

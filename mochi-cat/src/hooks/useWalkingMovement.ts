@@ -2,17 +2,14 @@ import { useEffect, useRef } from 'react';
 import type { PetState } from '../types/pet';
 import { DEBUG_WALKING } from '../debug/debugFlags';
 
-/** Walking speed in pixels per second */
-const WALK_SPEED_PX_PER_SEC = 35;
-
-/** Min/max walking duration in milliseconds */
-const WALK_DURATION_MIN_MS = 4_000;
-const WALK_DURATION_MAX_MS = 6_000;
-
 export interface UseWalkingMovementParams {
     petState: PetState;
     isDragging: boolean;
     isWindowVisible: boolean;
+    walkRunId: number;
+    walkingSpeedPxPerSecond: number;
+    walkingDurationMinMs: number;
+    walkingDurationMaxMs: number;
     onWalkComplete: () => void;
 }
 
@@ -26,6 +23,10 @@ export function useWalkingMovement({
     petState,
     isDragging,
     isWindowVisible,
+    walkRunId,
+    walkingSpeedPxPerSecond,
+    walkingDurationMinMs,
+    walkingDurationMaxMs,
     onWalkComplete,
 }: UseWalkingMovementParams): void {
     const rafIdRef = useRef<number | null>(null);
@@ -46,8 +47,8 @@ export function useWalkingMovement({
 
         const direction = petState === 'walk_right' ? 1 : -1;
         const duration =
-            WALK_DURATION_MIN_MS +
-            Math.random() * (WALK_DURATION_MAX_MS - WALK_DURATION_MIN_MS);
+            walkingDurationMinMs +
+            Math.random() * (walkingDurationMaxMs - walkingDurationMinMs);
 
         let startTime: number | null = null;
         let startX = 0;
@@ -69,7 +70,19 @@ export function useWalkingMovement({
             const maxX = workArea.x + workArea.width - windowWidth;
             const movementY = pos[1];
             startX = Math.max(minX, Math.min(maxX, startX));
-            if (DEBUG_WALKING) console.debug('[walking] start', { startX, workArea, windowWidth, maxX, direction, duration });
+            if (DEBUG_WALKING) {
+                console.debug('[walking] started', {
+                    state: petState,
+                    run: walkRunId,
+                    startX,
+                    workArea,
+                    windowWidth,
+                    maxX,
+                    direction,
+                    duration,
+                    walkingSpeedPxPerSecond,
+                });
+            }
 
             function frame(timestamp: number) {
                 if (cancelled) return;
@@ -77,7 +90,7 @@ export function useWalkingMovement({
                 if (startTime === null) startTime = timestamp;
                 const elapsed = timestamp - startTime;
 
-                const targetX = startX + direction * WALK_SPEED_PX_PER_SEC * (elapsed / 1000);
+                const targetX = startX + direction * walkingSpeedPxPerSecond * (elapsed / 1000);
 
                 const clampedX = Math.max(minX, Math.min(maxX, targetX));
 
@@ -87,7 +100,7 @@ export function useWalkingMovement({
                 const elapsed2 = timestamp - startTime;
                 if (elapsed2 >= duration || hitBoundary) {
                     // Walk finished
-                    if (DEBUG_WALKING) console.debug('[walking] done', { hitBoundary, elapsed: elapsed2 });
+                    if (DEBUG_WALKING) console.debug('[walking] completed -> idle', { hitBoundary, elapsed: elapsed2 });
                     onWalkCompleteRef.current();
                     return;
                 }
@@ -112,5 +125,9 @@ export function useWalkingMovement({
         petState,
         isDragging,
         isWindowVisible,
+        walkRunId,
+        walkingSpeedPxPerSecond,
+        walkingDurationMinMs,
+        walkingDurationMaxMs,
     ]);
 }

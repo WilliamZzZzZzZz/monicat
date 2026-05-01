@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain, screen, Menu, Tray } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
 import { settingsService } from './main/settings';
+import type { PetMenuAction } from './types/ipc';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -54,15 +55,22 @@ const createWindow = () => {
     }
 };
 
-type PetMenuAction = 'pet' | 'feed' | 'sleep' | 'wake' | 'openSizePanel' | 'walkLeft' | 'walkRight';
+function showMainWindowForAction(): void {
+    if (!mainWindow || mainWindow.isDestroyed()) return;
+    if (!mainWindow.isVisible()) mainWindow.show();
+    mainWindow.setAlwaysOnTop(settingsService.load().alwaysOnTop, 'floating');
+    tray?.setContextMenu(buildTrayMenu());
+}
 
 function sendPetMenuAction(action: PetMenuAction) {
     if (!mainWindow || mainWindow.isDestroyed()) return;
+    if (action === 'openSettingsPanel' || action === 'resetPosition') {
+        showMainWindowForAction();
+    }
     mainWindow.webContents.send('pet:menu-action', action);
 }
 
 function buildPetContextMenu(): Menu {
-    const s = settingsService.load();
     return Menu.buildFromTemplate([
         { label: '摸摸猫猫', click: () => sendPetMenuAction('pet') },
         { label: '喂小鱼干', click: () => sendPetMenuAction('feed') },
@@ -73,22 +81,12 @@ function buildPetContextMenu(): Menu {
         { label: '向右走动', click: () => sendPetMenuAction('walkRight') },
         { type: 'separator' },
         {
-            label: '调整尺寸...',
-            click: () => sendPetMenuAction('openSizePanel'),
+            label: '设置...',
+            click: () => sendPetMenuAction('openSettingsPanel'),
         },
         {
-            label: `气泡：${s.speechBubbleEnabled ? '开' : '关'}`,
-            click: () => applyAndBroadcastSettings({ speechBubbleEnabled: !s.speechBubbleEnabled }),
-        },
-        {
-            label: '随机行为',
-            type: 'checkbox',
-            checked: s.randomBehaviorEnabled,
-            click: () => applyAndBroadcastSettings({ randomBehaviorEnabled: !s.randomBehaviorEnabled }),
-        },
-        {
-            label: `始终置顶：${s.alwaysOnTop ? '开' : '关'}`,
-            click: () => applyAndBroadcastSettings({ alwaysOnTop: !s.alwaysOnTop }),
+            label: '重置位置',
+            click: () => sendPetMenuAction('resetPosition'),
         },
         { type: 'separator' },
         {
@@ -120,10 +118,14 @@ function buildTrayMenu(): Menu {
                     mainWindow.hide();
                 } else {
                     mainWindow.show();
-                    mainWindow.setAlwaysOnTop(true, 'floating');
+                    mainWindow.setAlwaysOnTop(settingsService.load().alwaysOnTop, 'floating');
                 }
                 tray?.setContextMenu(buildTrayMenu());
             },
+        },
+        {
+            label: '设置...',
+            click: () => sendPetMenuAction('openSettingsPanel'),
         },
         { label: '摸摸猫猫', click: () => sendPetMenuAction('pet') },
         { label: '让它睡觉', click: () => sendPetMenuAction('sleep') },
@@ -147,13 +149,15 @@ ipcMain.handle('menu:open-pet-menu', () => {
 // ---- Settings IPC ----
 function applyAndBroadcastSettings(partial: Parameters<typeof settingsService.update>[0]): void {
     const updated = settingsService.update(partial);
-    if (!mainWindow || mainWindow.isDestroyed()) return;
     // Apply alwaysOnTop immediately
-    if (partial.alwaysOnTop !== undefined) {
+    if (partial.alwaysOnTop !== undefined && mainWindow && !mainWindow.isDestroyed()) {
         mainWindow.setAlwaysOnTop(updated.alwaysOnTop, 'floating');
     }
     // Push updated settings to renderer
-    mainWindow.webContents.send('settings:changed', updated);
+    if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.webContents.send('settings:changed', updated);
+    }
+    tray?.setContextMenu(buildTrayMenu());
 }
 
 ipcMain.handle('settings:get', () => settingsService.load());
@@ -169,6 +173,7 @@ ipcMain.handle('settings:reset', () => {
         mainWindow.setAlwaysOnTop(fresh.alwaysOnTop, 'floating');
         mainWindow.webContents.send('settings:changed', fresh);
     }
+    tray?.setContextMenu(buildTrayMenu());
     return fresh;
 });
 
@@ -239,7 +244,7 @@ app.on('ready', () => {
             mainWindow.hide();
         } else {
             mainWindow.show();
-            mainWindow.setAlwaysOnTop(true, 'floating');
+            mainWindow.setAlwaysOnTop(settingsService.load().alwaysOnTop, 'floating');
         }
         // Keep context menu label in sync
         tray?.setContextMenu(buildTrayMenu());
