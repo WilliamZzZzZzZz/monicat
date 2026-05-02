@@ -21,17 +21,15 @@ State: sleeping
 
 State: walk_left
 ----------------------------------------
-  walk_left_000.png: 1254x1254  bbox=(103,234)-(1198,954)  margins T=234 B=299 L=103 R=55  [PASS]
-  walk_left_001.png: 1254x1254  bbox=(115,223)-(1212,968)  margins T=223 B=285 L=115 R=41  [PASS]
-  walk_left_002.png: 1254x1254  bbox=(105,230)-(1200,969)  margins T=230 B=284 L=105 R=53  [PASS]
-  walk_left_003.png: 1254x1254  bbox=(126,258)-(1208,979)  margins T=258 B=274 L=126 R=45  [PASS]
+  walk_left_000.png: 1122x1402  bbox=(87,254)-(1075,1035)  margins T=254 B=366 L=87 R=46  [PASS]
+  walk_left_001.png: 1122x1402  bbox=(72,251)-(1079,1010)  margins T=251 B=391 L=72 R=42  [PASS]
+  walk_left_002.png: 1122x1402  bbox=(100,257)-(1068,1023)  margins T=257 B=378 L=100 R=53  [PASS]
 
 State: walk_right
 ----------------------------------------
-  walk_right_000.png: 1254x1254  bbox=(55,234)-(1150,954)  margins T=234 B=299 L=55 R=103  [PASS]
-  walk_right_001.png: 1254x1254  bbox=(41,223)-(1138,968)  margins T=223 B=285 L=41 R=115  [PASS]
-  walk_right_002.png: 1254x1254  bbox=(53,230)-(1148,969)  margins T=230 B=284 L=53 R=105  [PASS]
-  walk_right_003.png: 1254x1254  bbox=(45,258)-(1127,979)  margins T=258 B=274 L=45 R=126  [PASS]
+  walk_right_000.png: 1122x1402  bbox=(46,254)-(1034,1035)  margins T=254 B=366 L=46 R=87  [PASS]
+  walk_right_001.png: 1122x1402  bbox=(42,251)-(1049,1010)  margins T=251 B=391 L=42 R=72  [PASS]
+  walk_right_002.png: 1122x1402  bbox=(53,257)-(1021,1023)  margins T=257 B=378 L=53 R=100  [PASS]
 
 State: dragging
 ----------------------------------------

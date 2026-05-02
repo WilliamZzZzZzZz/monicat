@@ -3,6 +3,7 @@ export type BehaviorFrequency = 'low' | 'normal' | 'high';
 export type PetMenuAction =
     | 'pet'
     | 'feed'
+    | 'grooming'
     | 'sleep'
     | 'wake'
     | 'openSettingsPanel'

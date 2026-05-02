@@ -1,0 +1,365 @@
+MochiCat Visual Artifact Transparency Report
+========================================================================
+
+filename: mochi-cat/src/assets/cat/idle/idle_000.png
+image size: 1122x1402
+mode: RGBA
+has alpha: yes
+transparent pixel ratio: 0.6959
+semi-transparent pixel ratio: 0.0198
+alpha bounding box: (196, 32, 856, 1269)
+top margin: 32
+bottom margin: 133
+left margin: 196
+right margin: 266
+non-transparent pixels touching top edge: no
+non-transparent pixels touching left edge: no
+non-transparent pixels touching right edge: no
+non-transparent pixels touching bottom edge: no
+large semi-transparent rectangle suspected: no
+top horizontal band suspected: no
+checkerboard likely baked in: no
+pass/fail: PASS
+------------------------------------------------------------------------
+filename: mochi-cat/src/assets/cat/idle/idle_001.png
+image size: 1122x1402
+mode: RGBA
+has alpha: yes
+transparent pixel ratio: 0.6950
+semi-transparent pixel ratio: 0.0198
+alpha bounding box: (187, 33, 846, 1288)
+top margin: 33
+bottom margin: 114
+left margin: 187
+right margin: 276
+non-transparent pixels touching top edge: no
+non-transparent pixels touching left edge: no
+non-transparent pixels touching right edge: no
+non-transparent pixels touching bottom edge: no
+large semi-transparent rectangle suspected: no
+top horizontal band suspected: no
+checkerboard likely baked in: no
+pass/fail: PASS
+------------------------------------------------------------------------
+filename: mochi-cat/src/assets/cat/idle/idle_002.png
+image size: 1122x1402
+mode: RGBA
+has alpha: yes
+transparent pixel ratio: 0.6983
+semi-transparent pixel ratio: 0.0197
+alpha bounding box: (190, 31, 843, 1285)
+top margin: 31
+bottom margin: 117
+left margin: 190
+right margin: 279
+non-transparent pixels touching top edge: no
+non-transparent pixels touching left edge: no
+non-transparent pixels touching right edge: no
+non-transparent pixels touching bottom edge: no
+large semi-transparent rectangle suspected: no
+top horizontal band suspected: no
+checkerboard likely baked in: no
+pass/fail: PASS
+------------------------------------------------------------------------
+filename: mochi-cat/src/assets/cat/dragging/dragging_000.png
+image size: 1122x1402
+mode: RGBA
+has alpha: yes
+transparent pixel ratio: 0.8166
+semi-transparent pixel ratio: 0.0210
+alpha bounding box: (296, 55, 774, 1293)
+top margin: 55
+bottom margin: 109
+left margin: 296
+right margin: 348
+non-transparent pixels touching top edge: no
+non-transparent pixels touching left edge: no
+non-transparent pixels touching right edge: no
+non-transparent pixels touching bottom edge: no
+large semi-transparent rectangle suspected: no
+top horizontal band suspected: no
+checkerboard likely baked in: no
+pass/fail: PASS
+------------------------------------------------------------------------
+filename: mochi-cat/src/assets/cat/dragging/dragging_001.png
+image size: 1122x1402
+mode: RGBA
+has alpha: yes
+transparent pixel ratio: 0.8197
+semi-transparent pixel ratio: 0.0228
+alpha bounding box: (288, 57, 773, 1332)
+top margin: 57
+bottom margin: 70
+left margin: 288
+right margin: 349
+non-transparent pixels touching top edge: no
+non-transparent pixels touching left edge: no
+non-transparent pixels touching right edge: no
+non-transparent pixels touching bottom edge: no
+large semi-transparent rectangle suspected: no
+top horizontal band suspected: no
+checkerboard likely baked in: no
+pass/fail: PASS
+------------------------------------------------------------------------
+filename: mochi-cat/src/assets/cat/dragging/dragging_002.png
+image size: 1122x1402
+mode: RGBA
+has alpha: yes
+transparent pixel ratio: 0.8264
+semi-transparent pixel ratio: 0.0225
+alpha bounding box: (291, 56, 771, 1305)
+top margin: 56
+bottom margin: 97
+left margin: 291
+right margin: 351
+non-transparent pixels touching top edge: no
+non-transparent pixels touching left edge: no
+non-transparent pixels touching right edge: no
+non-transparent pixels touching bottom edge: no
+large semi-transparent rectangle suspected: no
+top horizontal band suspected: no
+checkerboard likely baked in: no
+pass/fail: PASS
+------------------------------------------------------------------------
+filename: mochi-cat/src/assets/cat/happy/happy_000.png
+image size: 1122x1402
+mode: RGBA
+has alpha: yes
+transparent pixel ratio: 0.6879
+semi-transparent pixel ratio: 0.0222
+alpha bounding box: (187, 37, 853, 1331)
+top margin: 37
+bottom margin: 71
+left margin: 187
+right margin: 269
+non-transparent pixels touching top edge: no
+non-transparent pixels touching left edge: no
+non-transparent pixels touching right edge: no
+non-transparent pixels touching bottom edge: no
+large semi-transparent rectangle suspected: no
+top horizontal band suspected: no
+checkerboard likely baked in: no
+pass/fail: PASS
+------------------------------------------------------------------------
+filename: mochi-cat/src/assets/cat/happy/happy_001.png
+image size: 1122x1402
+mode: RGBA
+has alpha: yes
+transparent pixel ratio: 0.6859
+semi-transparent pixel ratio: 0.0219
+alpha bounding box: (177, 26, 822, 1331)
+top margin: 26
+bottom margin: 71
+left margin: 177
+right margin: 300
+non-transparent pixels touching top edge: no
+non-transparent pixels touching left edge: no
+non-transparent pixels touching right edge: no
+non-transparent pixels touching bottom edge: no
+large semi-transparent rectangle suspected: no
+top horizontal band suspected: no
+checkerboard likely baked in: no
+pass/fail: PASS
+------------------------------------------------------------------------
+filename: mochi-cat/src/assets/cat/happy/happy_002.png
+image size: 1122x1402
+mode: RGBA
+has alpha: yes
+transparent pixel ratio: 0.7161
+semi-transparent pixel ratio: 0.0211
+alpha bounding box: (197, 49, 823, 1291)
+top margin: 49
+bottom margin: 111
+left margin: 197
+right margin: 299
+non-transparent pixels touching top edge: no
+non-transparent pixels touching left edge: no
+non-transparent pixels touching right edge: no
+non-transparent pixels touching bottom edge: no
+large semi-transparent rectangle suspected: no
+top horizontal band suspected: no
+checkerboard likely baked in: no
+pass/fail: PASS
+------------------------------------------------------------------------
+filename: mochi-cat/src/assets/cat/sleeping/sleeping_000.png
+image size: 1122x1402
+mode: RGBA
+has alpha: yes
+transparent pixel ratio: 0.7281
+semi-transparent pixel ratio: 0.0149
+alpha bounding box: (68, 421, 1061, 1017)
+top margin: 421
+bottom margin: 385
+left margin: 68
+right margin: 61
+non-transparent pixels touching top edge: no
+non-transparent pixels touching left edge: no
+non-transparent pixels touching right edge: no
+non-transparent pixels touching bottom edge: no
+large semi-transparent rectangle suspected: no
+top horizontal band suspected: no
+checkerboard likely baked in: no
+pass/fail: PASS
+------------------------------------------------------------------------
+filename: mochi-cat/src/assets/cat/sleeping/sleeping_001.png
+image size: 1122x1402
+mode: RGBA
+has alpha: yes
+transparent pixel ratio: 0.7272
+semi-transparent pixel ratio: 0.0147
+alpha bounding box: (68, 428, 1061, 1014)
+top margin: 428
+bottom margin: 388
+left margin: 68
+right margin: 61
+non-transparent pixels touching top edge: no
+non-transparent pixels touching left edge: no
+non-transparent pixels touching right edge: no
+non-transparent pixels touching bottom edge: no
+large semi-transparent rectangle suspected: no
+top horizontal band suspected: no
+checkerboard likely baked in: no
+pass/fail: PASS
+------------------------------------------------------------------------
+filename: mochi-cat/src/assets/cat/sleeping/sleeping_002.png
+image size: 1122x1402
+mode: RGBA
+has alpha: yes
+transparent pixel ratio: 0.7271
+semi-transparent pixel ratio: 0.0149
+alpha bounding box: (66, 410, 1061, 1005)
+top margin: 410
+bottom margin: 397
+left margin: 66
+right margin: 61
+non-transparent pixels touching top edge: no
+non-transparent pixels touching left edge: no
+non-transparent pixels touching right edge: no
+non-transparent pixels touching bottom edge: no
+large semi-transparent rectangle suspected: no
+top horizontal band suspected: no
+checkerboard likely baked in: no
+pass/fail: PASS
+------------------------------------------------------------------------
+filename: mochi-cat/src/assets/cat/walk_right/walk_right_000.png
+image size: 1122x1402
+mode: RGBA
+has alpha: yes
+transparent pixel ratio: 0.8057
+semi-transparent pixel ratio: 0.0139
+alpha bounding box: (46, 254, 1035, 1036)
+top margin: 254
+bottom margin: 366
+left margin: 46
+right margin: 87
+non-transparent pixels touching top edge: no
+non-transparent pixels touching left edge: no
+non-transparent pixels touching right edge: no
+non-transparent pixels touching bottom edge: no
+large semi-transparent rectangle suspected: no
+top horizontal band suspected: no
+checkerboard likely baked in: no
+pass/fail: PASS
+------------------------------------------------------------------------
+filename: mochi-cat/src/assets/cat/walk_right/walk_right_001.png
+image size: 1122x1402
+mode: RGBA
+has alpha: yes
+transparent pixel ratio: 0.8208
+semi-transparent pixel ratio: 0.0137
+alpha bounding box: (42, 251, 1050, 1011)
+top margin: 251
+bottom margin: 391
+left margin: 42
+right margin: 72
+non-transparent pixels touching top edge: no
+non-transparent pixels touching left edge: no
+non-transparent pixels touching right edge: no
+non-transparent pixels touching bottom edge: no
+large semi-transparent rectangle suspected: no
+top horizontal band suspected: no
+checkerboard likely baked in: no
+pass/fail: PASS
+------------------------------------------------------------------------
+filename: mochi-cat/src/assets/cat/walk_right/walk_right_002.png
+image size: 1122x1402
+mode: RGBA
+has alpha: yes
+transparent pixel ratio: 0.8209
+semi-transparent pixel ratio: 0.0139
+alpha bounding box: (53, 257, 1022, 1024)
+top margin: 257
+bottom margin: 378
+left margin: 53
+right margin: 100
+non-transparent pixels touching top edge: no
+non-transparent pixels touching left edge: no
+non-transparent pixels touching right edge: no
+non-transparent pixels touching bottom edge: no
+large semi-transparent rectangle suspected: no
+top horizontal band suspected: no
+checkerboard likely baked in: no
+pass/fail: PASS
+------------------------------------------------------------------------
+filename: mochi-cat/src/assets/cat/walk_left/walk_left_000.png
+image size: 1122x1402
+mode: RGBA
+has alpha: yes
+transparent pixel ratio: 0.8057
+semi-transparent pixel ratio: 0.0139
+alpha bounding box: (87, 254, 1076, 1036)
+top margin: 254
+bottom margin: 366
+left margin: 87
+right margin: 46
+non-transparent pixels touching top edge: no
+non-transparent pixels touching left edge: no
+non-transparent pixels touching right edge: no
+non-transparent pixels touching bottom edge: no
+large semi-transparent rectangle suspected: no
+top horizontal band suspected: no
+checkerboard likely baked in: no
+pass/fail: PASS
+------------------------------------------------------------------------
+filename: mochi-cat/src/assets/cat/walk_left/walk_left_001.png
+image size: 1122x1402
+mode: RGBA
+has alpha: yes
+transparent pixel ratio: 0.8208
+semi-transparent pixel ratio: 0.0137
+alpha bounding box: (72, 251, 1080, 1011)
+top margin: 251
+bottom margin: 391
+left margin: 72
+right margin: 42
+non-transparent pixels touching top edge: no
+non-transparent pixels touching left edge: no
+non-transparent pixels touching right edge: no
+non-transparent pixels touching bottom edge: no
+large semi-transparent rectangle suspected: no
+top horizontal band suspected: no
+checkerboard likely baked in: no
+pass/fail: PASS
+------------------------------------------------------------------------
+filename: mochi-cat/src/assets/cat/walk_left/walk_left_002.png
+image size: 1122x1402
+mode: RGBA
+has alpha: yes
+transparent pixel ratio: 0.8209
+semi-transparent pixel ratio: 0.0139
+alpha bounding box: (100, 257, 1069, 1024)
+top margin: 257
+bottom margin: 378
+left margin: 100
+right margin: 53
+non-transparent pixels touching top edge: no
+non-transparent pixels touching left edge: no
+non-transparent pixels touching right edge: no
+non-transparent pixels touching bottom edge: no
+large semi-transparent rectangle suspected: no
+top horizontal band suspected: no
+checkerboard likely baked in: no
+pass/fail: PASS
+------------------------------------------------------------------------
+
+Summary: 18 PASS / 0 FAIL / 18 total

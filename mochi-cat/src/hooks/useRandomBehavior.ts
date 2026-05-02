@@ -20,6 +20,7 @@ const WAKE_BUBBLES = ['醒啦～', '喵？'] as const;
 const FREQUENCY_PRESETS: Record<BehaviorFrequency, {
     delayMultiplier: number;
     happyChance: number;
+    groomingChance: number;
     walkRightChance: number;
     walkLeftChance: number;
     napChance: number;
@@ -28,6 +29,7 @@ const FREQUENCY_PRESETS: Record<BehaviorFrequency, {
     low: {
         delayMultiplier: 1.75,
         happyChance: 0.14,
+        groomingChance: 0.04,
         walkRightChance: 0.10,
         walkLeftChance: 0.10,
         napChance: 0.08,
@@ -36,6 +38,7 @@ const FREQUENCY_PRESETS: Record<BehaviorFrequency, {
     normal: {
         delayMultiplier: 1,
         happyChance: 0.25,
+        groomingChance: 0.07,
         walkRightChance: 0.25,
         walkLeftChance: 0.25,
         napChance: 0.15,
@@ -44,6 +47,7 @@ const FREQUENCY_PRESETS: Record<BehaviorFrequency, {
     high: {
         delayMultiplier: 0.55,
         happyChance: 0.32,
+        groomingChance: 0.08,
         walkRightChance: 0.28,
         walkLeftChance: 0.28,
         napChance: 0.20,
@@ -75,6 +79,7 @@ export interface UseRandomBehaviorParams {
     triggerSleep: (bubbleText?: string, reason?: string) => void;
     triggerWalkLeft: (reason?: string) => void;
     triggerWalkRight: (reason?: string) => void;
+    triggerGrooming: (reason?: string) => void;
 }
 
 // ---- hook -------------------------------------------------------------------
@@ -103,17 +108,20 @@ export function useRandomBehavior({
     triggerSleep,
     triggerWalkLeft,
     triggerWalkRight,
+    triggerGrooming,
 }: UseRandomBehaviorParams): void {
     // Keep latest callbacks in refs so closures inside timers never go stale
     const triggerHappyRef = useRef(triggerHappy);
     const triggerSleepRef = useRef(triggerSleep);
     const triggerWalkLeftRef = useRef(triggerWalkLeft);
     const triggerWalkRightRef = useRef(triggerWalkRight);
+    const triggerGroomingRef = useRef(triggerGrooming);
     useEffect(() => {
         triggerHappyRef.current = triggerHappy;
         triggerSleepRef.current = triggerSleep;
         triggerWalkLeftRef.current = triggerWalkLeft;
         triggerWalkRightRef.current = triggerWalkRight;
+        triggerGroomingRef.current = triggerGrooming;
     });
 
     const timerRef = useRef<number | null>(null);
@@ -122,6 +130,7 @@ export function useRandomBehavior({
         lastAnyBehaviorAt: 0,
         lastWalkAt: 0,
         lastHappyAt: 0,
+        lastGroomingAt: 0,
         lastSleepAt: 0,
     });
 
@@ -189,6 +198,15 @@ export function useRandomBehavior({
                         cooldownRef.current.lastAnyBehaviorAt = now;
                         cooldownRef.current.lastHappyAt = now;
                         triggerHappyRef.current(pickRandom(IDLE_BUBBLES), 'random selfHappy');
+                    } else if (roll < (threshold += preset.groomingChance)) {
+                        if (now - cooldownRef.current.lastGroomingAt < scaleMs(cfg.groomingCooldownMs, preset.cooldownMultiplier)) {
+                            if (DEBUG_RANDOM) console.debug('[random] skipped grooming — cooldown');
+                            schedule(); return;
+                        }
+                        if (DEBUG_RANDOM) console.debug('[random] grooming');
+                        cooldownRef.current.lastAnyBehaviorAt = now;
+                        cooldownRef.current.lastGroomingAt = now;
+                        triggerGroomingRef.current('random grooming');
                     } else if (autoWalkEnabled && roll < (threshold += preset.walkRightChance)) {
                         if (now - cooldownRef.current.lastWalkAt < scaleMs(cfg.walkCooldownMs, preset.cooldownMultiplier)) {
                             if (DEBUG_RANDOM) console.debug('[random] skipped walkRight — cooldown');

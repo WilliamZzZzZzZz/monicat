@@ -1,0 +1,98 @@
+MochiCat Grooming Asset Report
+========================================================================
+
+filename: grooming_000.png
+source file path: /Users/williamzzz/Desktop/monicat/grooming_000.png
+output file path: /Users/williamzzz/Desktop/monicat/processed_assets/cat/grooming/grooming_000.png
+final asset path: /Users/williamzzz/Desktop/monicat/mochi-cat/src/assets/cat/grooming/grooming_000.png
+image size: 1055x1491
+source mode: RGB
+mode: RGBA
+source has alpha: no
+has alpha: yes
+transparent pixel ratio: 0.7155
+semi-transparent pixel ratio: 0.0146
+alpha bounding box: (188, 111, 813, 1338)
+top margin: 111
+bottom margin: 153
+left margin: 188
+right margin: 242
+non-transparent pixels touching edge: no
+source checkerboard suspected: yes
+checkerboard suspected: no
+source top gray band suspected: yes
+top gray band suspected: no
+pass/fail: PASS
+------------------------------------------------------------------------
+filename: grooming_001.png
+source file path: /Users/williamzzz/Desktop/monicat/grooming_001.png
+output file path: /Users/williamzzz/Desktop/monicat/processed_assets/cat/grooming/grooming_001.png
+final asset path: /Users/williamzzz/Desktop/monicat/mochi-cat/src/assets/cat/grooming/grooming_001.png
+image size: 1055x1491
+source mode: RGB
+mode: RGBA
+source has alpha: no
+has alpha: yes
+transparent pixel ratio: 0.7254
+semi-transparent pixel ratio: 0.0135
+alpha bounding box: (160, 113, 777, 1319)
+top margin: 113
+bottom margin: 172
+left margin: 160
+right margin: 278
+non-transparent pixels touching edge: no
+source checkerboard suspected: yes
+checkerboard suspected: no
+source top gray band suspected: yes
+top gray band suspected: no
+pass/fail: PASS
+------------------------------------------------------------------------
+filename: grooming_002.png
+source file path: /Users/williamzzz/Desktop/monicat/grooming_002.png
+output file path: /Users/williamzzz/Desktop/monicat/processed_assets/cat/grooming/grooming_002.png
+final asset path: /Users/williamzzz/Desktop/monicat/mochi-cat/src/assets/cat/grooming/grooming_002.png
+image size: 1055x1491
+source mode: RGB
+mode: RGBA
+source has alpha: no
+has alpha: yes
+transparent pixel ratio: 0.7137
+semi-transparent pixel ratio: 0.0148
+alpha bounding box: (161, 94, 832, 1362)
+top margin: 94
+bottom margin: 129
+left margin: 161
+right margin: 223
+non-transparent pixels touching edge: no
+source checkerboard suspected: yes
+checkerboard suspected: no
+source top gray band suspected: yes
+top gray band suspected: no
+pass/fail: PASS
+------------------------------------------------------------------------
+filename: grooming_003.png
+source file path: /Users/williamzzz/Desktop/monicat/grooming_003.png
+output file path: /Users/williamzzz/Desktop/monicat/processed_assets/cat/grooming/grooming_003.png
+final asset path: /Users/williamzzz/Desktop/monicat/mochi-cat/src/assets/cat/grooming/grooming_003.png
+image size: 1055x1491
+source mode: RGB
+mode: RGBA
+source has alpha: no
+has alpha: yes
+transparent pixel ratio: 0.7208
+semi-transparent pixel ratio: 0.0160
+alpha bounding box: (154, 104, 799, 1351)
+top margin: 104
+bottom margin: 140
+left margin: 154
+right margin: 256
+non-transparent pixels touching edge: no
+source checkerboard suspected: yes
+checkerboard suspected: no
+source top gray band suspected: yes
+top gray band suspected: no
+pass/fail: PASS
+------------------------------------------------------------------------
+
+Summary: 4 PASS / 0 FAIL / 4 total
+Validated files copied to src/assets/cat/grooming.

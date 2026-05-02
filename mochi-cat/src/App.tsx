@@ -8,9 +8,12 @@ import { useRandomBehavior } from './hooks/useRandomBehavior';
 import { useWalkingMovement } from './hooks/useWalkingMovement';
 import { PET_SIZE_DEFAULT } from './components/SizeSliderPanel';
 import { DEBUG_INTERACTION, DEBUG_STATE_MACHINE } from './debug/debugFlags';
+import { animationConfig } from './animation/animationConfig';
 
 const DEFAULT_SLEEP_AFTER_IDLE_MS = import.meta.env.DEV ? 15_000 : 5 * 60_000;
 const USER_ACTION_RANDOM_COOLDOWN_MS = import.meta.env.DEV ? 1_500 : 5_000;
+const GROOMING_DURATION_MS =
+    Math.ceil((animationConfig.grooming.frames.length / animationConfig.grooming.fps) * 1000) + 300;
 
 const DEFAULT_SETTINGS: UserSettings = {
     petSizePx: PET_SIZE_DEFAULT,
@@ -45,6 +48,7 @@ export default function App() {
 
     const settingsRef = useRef<UserSettings>(DEFAULT_SETTINGS);
     const happyTimerRef = useRef<number | null>(null);
+    const groomingTimerRef = useRef<number | null>(null);
     const bubbleTimerRef = useRef<number | null>(null);
     const inactivityTimerRef = useRef<number | null>(null);
     const petStateRef = useRef<PetState>('idle');
@@ -76,6 +80,13 @@ export default function App() {
         }
     }, []);
 
+    const clearGroomingTimer = useCallback(() => {
+        if (groomingTimerRef.current !== null) {
+            window.clearTimeout(groomingTimerRef.current);
+            groomingTimerRef.current = null;
+        }
+    }, []);
+
     const clearBubbleTimer = useCallback(() => {
         if (bubbleTimerRef.current !== null) {
             window.clearTimeout(bubbleTimerRef.current);
@@ -96,13 +107,14 @@ export default function App() {
 
     const transitionToState = useCallback((nextState: PetState, reason: string) => {
         const previousState = petStateRef.current;
+        if (nextState !== 'grooming') clearGroomingTimer();
         petStateRef.current = nextState;
         enteredStateAtRef.current = Date.now();
         setPetState(nextState);
         if (DEBUG_STATE_MACHINE) {
             console.debug(`[state] transition: ${previousState} -> ${nextState}`, { reason });
         }
-    }, []);
+    }, [clearGroomingTimer]);
 
     const showBubble = useCallback((text: string) => {
         if (!settingsRef.current.speechBubbleEnabled) {
@@ -154,16 +166,18 @@ export default function App() {
         }
 
         clearHappyTimer();
+        clearGroomingTimer();
         markUserInteraction(USER_ACTION_RANDOM_COOLDOWN_MS);
         transitionToState(nextState, reason);
         resetInactivityTimer(`after ${reason}`);
         return true;
-    }, [clearHappyTimer, markUserInteraction, resetInactivityTimer, transitionToState]);
+    }, [clearGroomingTimer, clearHappyTimer, markUserInteraction, resetInactivityTimer, transitionToState]);
 
     const triggerHappy = useCallback((bubbleOverride?: string, reason = 'happy') => {
         if (petStateRef.current === 'dragging' || isDraggingRef.current) return;
 
         clearHappyTimer();
+        clearGroomingTimer();
         transitionToState('happy', reason);
         showBubble(bubbleOverride ?? '喵～');
         resetInactivityTimer(`after ${reason}`);
@@ -179,19 +193,53 @@ export default function App() {
             transitionToState('idle', 'happy timer elapsed');
             resetInactivityTimer('after happy timer');
         }, settingsRef.current.happyDurationMs);
-    }, [clearHappyTimer, resetInactivityTimer, showBubble, transitionToState]);
+    }, [clearGroomingTimer, clearHappyTimer, resetInactivityTimer, showBubble, transitionToState]);
 
     const triggerSleep = useCallback((bubbleOverride?: string, reason = 'sleep') => {
         if (petStateRef.current === 'dragging' || isDraggingRef.current) return;
         clearHappyTimer();
+        clearGroomingTimer();
         transitionToState('sleeping', reason);
         showBubble(bubbleOverride ?? 'Zzz...');
-    }, [clearHappyTimer, showBubble, transitionToState]);
+    }, [clearGroomingTimer, clearHappyTimer, showBubble, transitionToState]);
 
     const triggerIdle = useCallback((reason = 'idle') => {
         transitionToState('idle', reason);
         resetInactivityTimer(`after ${reason}`);
     }, [resetInactivityTimer, transitionToState]);
+
+    const triggerGrooming = useCallback((reason = 'manual grooming') => {
+        if (petStateRef.current === 'dragging' || isDraggingRef.current) return;
+        if (isRandomReason(reason) && petStateRef.current !== 'idle') return;
+
+        clearHappyTimer();
+        clearGroomingTimer();
+        clearBubbleTimer();
+        setBubbleText(null);
+        if (!isRandomReason(reason)) {
+            markUserInteraction(USER_ACTION_RANDOM_COOLDOWN_MS);
+        }
+
+        transitionToState('grooming', reason);
+        groomingTimerRef.current = window.setTimeout(() => {
+            groomingTimerRef.current = null;
+            if (petStateRef.current !== 'grooming') {
+                if (DEBUG_STATE_MACHINE) {
+                    console.debug('[state] grooming timer skipped', { currentState: petStateRef.current });
+                }
+                return;
+            }
+            transitionToState('idle', 'grooming timer elapsed');
+            resetInactivityTimer('after grooming timer');
+        }, GROOMING_DURATION_MS);
+    }, [
+        clearBubbleTimer,
+        clearGroomingTimer,
+        clearHappyTimer,
+        markUserInteraction,
+        resetInactivityTimer,
+        transitionToState,
+    ]);
 
     const startWalk = useCallback((nextState: 'walk_left' | 'walk_right', reason: string) => {
         const isExplicitUserAction = !isRandomReason(reason);
@@ -270,10 +318,11 @@ export default function App() {
         resetInactivityTimer('mount');
         return () => {
             clearHappyTimer();
+            clearGroomingTimer();
             clearBubbleTimer();
             if (inactivityTimerRef.current !== null) window.clearTimeout(inactivityTimerRef.current);
         };
-    }, [clearBubbleTimer, clearHappyTimer, resetInactivityTimer]);
+    }, [clearBubbleTimer, clearGroomingTimer, clearHappyTimer, resetInactivityTimer]);
 
     useEffect(() => {
         resetInactivityTimer('settings sleepAfterIdleMs changed');
@@ -312,6 +361,9 @@ export default function App() {
                 case 'feed':
                     triggerHappy('小鱼干！', 'menu feed');
                     break;
+                case 'grooming':
+                    triggerGrooming('menu grooming');
+                    break;
                 case 'sleep':
                     triggerSleep('Zzz...', 'menu sleep');
                     break;
@@ -336,6 +388,7 @@ export default function App() {
     }, [
         markUserInteraction,
         resetPetPosition,
+        triggerGrooming,
         triggerHappy,
         triggerSleep,
         triggerWalkLeft,
@@ -469,6 +522,7 @@ export default function App() {
         triggerSleep,
         triggerWalkLeft,
         triggerWalkRight,
+        triggerGrooming,
     });
 
     return (

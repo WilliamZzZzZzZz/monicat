@@ -1,4 +1,11 @@
-export type PetState = 'idle' | 'dragging' | 'happy' | 'sleeping' | 'walk_right' | 'walk_left';
+export type PetState =
+    | 'idle'
+    | 'dragging'
+    | 'happy'
+    | 'sleeping'
+    | 'walk_right'
+    | 'walk_left'
+    | 'grooming';
 
 export const PET_STATE_EMOJI: Record<PetState, string> = {
     idle: '🐱',
@@ -7,4 +14,5 @@ export const PET_STATE_EMOJI: Record<PetState, string> = {
     sleeping: '😴',
     walk_right: '🐾',
     walk_left: '🐾',
+    grooming: '🧼',
 };

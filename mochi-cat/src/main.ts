@@ -74,6 +74,7 @@ function buildPetContextMenu(): Menu {
     return Menu.buildFromTemplate([
         { label: '摸摸猫猫', click: () => sendPetMenuAction('pet') },
         { label: '喂小鱼干', click: () => sendPetMenuAction('feed') },
+        { label: '洗洗脸', click: () => sendPetMenuAction('grooming') },
         { label: '让它睡觉', click: () => sendPetMenuAction('sleep') },
         { label: '唤醒猫猫', click: () => sendPetMenuAction('wake') },
         { type: 'separator' },
@@ -128,6 +129,7 @@ function buildTrayMenu(): Menu {
             click: () => sendPetMenuAction('openSettingsPanel'),
         },
         { label: '摸摸猫猫', click: () => sendPetMenuAction('pet') },
+        { label: '洗洗脸', click: () => sendPetMenuAction('grooming') },
         { label: '让它睡觉', click: () => sendPetMenuAction('sleep') },
         {
             label: '随机行为',

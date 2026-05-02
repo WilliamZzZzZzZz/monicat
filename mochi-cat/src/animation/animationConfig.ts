@@ -21,12 +21,15 @@ const sleeping002 = new URL('../assets/cat/sleeping/sleeping_002.png', import.me
 const walkRight000 = new URL('../assets/cat/walk_right/walk_right_000.png', import.meta.url).href;
 const walkRight001 = new URL('../assets/cat/walk_right/walk_right_001.png', import.meta.url).href;
 const walkRight002 = new URL('../assets/cat/walk_right/walk_right_002.png', import.meta.url).href;
-const walkRight003 = new URL('../assets/cat/walk_right/walk_right_003.png', import.meta.url).href;
 
 const walkLeft000 = new URL('../assets/cat/walk_left/walk_left_000.png', import.meta.url).href;
 const walkLeft001 = new URL('../assets/cat/walk_left/walk_left_001.png', import.meta.url).href;
 const walkLeft002 = new URL('../assets/cat/walk_left/walk_left_002.png', import.meta.url).href;
-const walkLeft003 = new URL('../assets/cat/walk_left/walk_left_003.png', import.meta.url).href;
+
+const grooming000 = new URL('../assets/cat/grooming/grooming_000.png', import.meta.url).href;
+const grooming001 = new URL('../assets/cat/grooming/grooming_001.png', import.meta.url).href;
+const grooming002 = new URL('../assets/cat/grooming/grooming_002.png', import.meta.url).href;
+const grooming003 = new URL('../assets/cat/grooming/grooming_003.png', import.meta.url).href;
 
 export const animationConfig: AnimationConfig = {
     idle: {
@@ -50,13 +53,18 @@ export const animationConfig: AnimationConfig = {
         frames: [sleeping000, sleeping001, sleeping002],
     },
     walk_right: {
-        fps: 7,
+        fps: 6,
         loop: true,
-        frames: [walkRight000, walkRight001, walkRight002, walkRight003],
+        frames: [walkRight000, walkRight001, walkRight002],
     },
     walk_left: {
-        fps: 7,
+        fps: 6,
         loop: true,
-        frames: [walkLeft000, walkLeft001, walkLeft002, walkLeft003],
+        frames: [walkLeft000, walkLeft001, walkLeft002],
+    },
+    grooming: {
+        fps: 5,
+        loop: false,
+        frames: [grooming000, grooming001, grooming002, grooming003],
     },
 };

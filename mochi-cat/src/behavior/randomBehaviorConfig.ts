@@ -22,6 +22,8 @@ export const RANDOM_BEHAVIOR_CONFIG = {
     walkCooldownMs: DEV ? 0 : 20_000,
     /** Minimum time between two happy behaviors */
     happyCooldownMs: DEV ? 0 : 10_000,
+    /** Minimum time between two grooming behaviors */
+    groomingCooldownMs: 45_000,
     /** Minimum time between two sleep behaviors */
     sleepCooldownMs: DEV ? 0 : 45_000,
 };
