@@ -17,8 +17,13 @@ interface SettingsPanelProps {
     sizePx: number;
     petState: PetState;
     isWindowVisible: boolean;
+    isDragging: boolean;
     windowPosition: [number, number] | null;
     lastInteractionAgeMs: number;
+    enteredStateAgeMs: number;
+    actionKind: string;
+    actionToken: number;
+    manualActionCooldownRemainingMs: number;
     onSizePreview: (px: number) => void;
     onSettingsChange: (partial: Partial<UserSettings>) => void;
     onResetPosition: () => void;
@@ -37,8 +42,13 @@ export function SettingsPanel({
     sizePx,
     petState,
     isWindowVisible,
+    isDragging,
     windowPosition,
     lastInteractionAgeMs,
+    enteredStateAgeMs,
+    actionKind,
+    actionToken,
+    manualActionCooldownRemainingMs,
     onSizePreview,
     onSettingsChange,
     onResetPosition,
@@ -224,6 +234,18 @@ export function SettingsPanel({
                                 <dd>{petState}</dd>
                             </div>
                             <div>
+                                <dt>动作</dt>
+                                <dd>{actionKind}</dd>
+                            </div>
+                            <div>
+                                <dt>Token</dt>
+                                <dd>{actionToken}</dd>
+                            </div>
+                            <div>
+                                <dt>入场</dt>
+                                <dd>{formatMs(enteredStateAgeMs)}</dd>
+                            </div>
+                            <div>
                                 <dt>尺寸</dt>
                                 <dd>{sizePx} px</dd>
                             </div>
@@ -248,8 +270,16 @@ export function SettingsPanel({
                                 <dd>{isWindowVisible ? 'true' : 'false'}</dd>
                             </div>
                             <div>
+                                <dt>拖拽</dt>
+                                <dd>{isDragging ? 'true' : 'false'}</dd>
+                            </div>
+                            <div>
                                 <dt>交互</dt>
                                 <dd>{formatMs(lastInteractionAgeMs)}</dd>
+                            </div>
+                            <div>
+                                <dt>冷却</dt>
+                                <dd>{formatMs(manualActionCooldownRemainingMs)}</dd>
                             </div>
                         </dl>
                     </fieldset>

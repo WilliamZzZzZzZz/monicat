@@ -1,8 +1,9 @@
-import { useEffect, useRef, MutableRefObject } from 'react';
+import { useEffect, useRef, type MutableRefObject } from 'react';
 import type { PetState } from '../types/pet';
 import type { BehaviorFrequency } from '../types/ipc';
 import { RANDOM_BEHAVIOR_CONFIG as cfg } from '../behavior/randomBehaviorConfig';
 import { DEBUG_RANDOM } from '../debug/debugFlags';
+import type { PetActionRequest } from '../actions/actionTypes';
 
 // ---- helpers ----------------------------------------------------------------
 
@@ -75,11 +76,7 @@ export interface UseRandomBehaviorParams {
     manualActionCooldownUntilRef: MutableRefObject<number>;
     /** Ref to timestamp when current petState was entered (ms) */
     enteredStateAtRef: MutableRefObject<number>;
-    triggerHappy: (bubbleText?: string, reason?: string) => void;
-    triggerSleep: (bubbleText?: string, reason?: string) => void;
-    triggerWalkLeft: (reason?: string) => void;
-    triggerWalkRight: (reason?: string) => void;
-    triggerGrooming: (reason?: string) => void;
+    dispatchPetAction: (request: PetActionRequest) => boolean;
 }
 
 // ---- hook -------------------------------------------------------------------
@@ -104,25 +101,13 @@ export function useRandomBehavior({
     lastInteractionAtRef,
     manualActionCooldownUntilRef,
     enteredStateAtRef,
-    triggerHappy,
-    triggerSleep,
-    triggerWalkLeft,
-    triggerWalkRight,
-    triggerGrooming,
+    dispatchPetAction,
 }: UseRandomBehaviorParams): void {
-    // Keep latest callbacks in refs so closures inside timers never go stale
-    const triggerHappyRef = useRef(triggerHappy);
-    const triggerSleepRef = useRef(triggerSleep);
-    const triggerWalkLeftRef = useRef(triggerWalkLeft);
-    const triggerWalkRightRef = useRef(triggerWalkRight);
-    const triggerGroomingRef = useRef(triggerGrooming);
+    // Keep latest dispatcher in a ref so closures inside timers never go stale
+    const dispatchPetActionRef = useRef(dispatchPetAction);
     useEffect(() => {
-        triggerHappyRef.current = triggerHappy;
-        triggerSleepRef.current = triggerSleep;
-        triggerWalkLeftRef.current = triggerWalkLeft;
-        triggerWalkRightRef.current = triggerWalkRight;
-        triggerGroomingRef.current = triggerGrooming;
-    });
+        dispatchPetActionRef.current = dispatchPetAction;
+    }, [dispatchPetAction]);
 
     const timerRef = useRef<number | null>(null);
     // Per-behavior cooldown timestamps
@@ -194,46 +179,88 @@ export function useRandomBehavior({
                             if (DEBUG_RANDOM) console.debug('[random] skipped happy — cooldown');
                             schedule(); return;
                         }
-                        if (DEBUG_RANDOM) console.debug('[random] selfHappy');
-                        cooldownRef.current.lastAnyBehaviorAt = now;
-                        cooldownRef.current.lastHappyAt = now;
-                        triggerHappyRef.current(pickRandom(IDLE_BUBBLES), 'random selfHappy');
+                        if (DEBUG_RANDOM) console.debug('[random] selected action', { state: 'happy', reason: 'random selfHappy' });
+                        const accepted = dispatchPetActionRef.current({
+                            state: 'happy',
+                            source: 'random',
+                            reason: 'random selfHappy',
+                            bubbleText: pickRandom(IDLE_BUBBLES),
+                        });
+                        if (accepted) {
+                            cooldownRef.current.lastAnyBehaviorAt = now;
+                            cooldownRef.current.lastHappyAt = now;
+                        } else {
+                            schedule();
+                        }
                     } else if (roll < (threshold += preset.groomingChance)) {
                         if (now - cooldownRef.current.lastGroomingAt < scaleMs(cfg.groomingCooldownMs, preset.cooldownMultiplier)) {
                             if (DEBUG_RANDOM) console.debug('[random] skipped grooming — cooldown');
                             schedule(); return;
                         }
-                        if (DEBUG_RANDOM) console.debug('[random] grooming');
-                        cooldownRef.current.lastAnyBehaviorAt = now;
-                        cooldownRef.current.lastGroomingAt = now;
-                        triggerGroomingRef.current('random grooming');
+                        if (DEBUG_RANDOM) console.debug('[random] selected action', { state: 'grooming', reason: 'random grooming' });
+                        const accepted = dispatchPetActionRef.current({
+                            state: 'grooming',
+                            source: 'random',
+                            reason: 'random grooming',
+                        });
+                        if (accepted) {
+                            cooldownRef.current.lastAnyBehaviorAt = now;
+                            cooldownRef.current.lastGroomingAt = now;
+                        } else {
+                            schedule();
+                        }
                     } else if (autoWalkEnabled && roll < (threshold += preset.walkRightChance)) {
                         if (now - cooldownRef.current.lastWalkAt < scaleMs(cfg.walkCooldownMs, preset.cooldownMultiplier)) {
                             if (DEBUG_RANDOM) console.debug('[random] skipped walkRight — cooldown');
                             schedule(); return;
                         }
-                        if (DEBUG_RANDOM) console.debug('[random] walkRight');
-                        cooldownRef.current.lastAnyBehaviorAt = now;
-                        cooldownRef.current.lastWalkAt = now;
-                        triggerWalkRightRef.current('random walkRight');
+                        if (DEBUG_RANDOM) console.debug('[random] selected action', { state: 'walk_right', reason: 'random walkRight' });
+                        const accepted = dispatchPetActionRef.current({
+                            state: 'walk_right',
+                            source: 'random',
+                            reason: 'random walkRight',
+                        });
+                        if (accepted) {
+                            cooldownRef.current.lastAnyBehaviorAt = now;
+                            cooldownRef.current.lastWalkAt = now;
+                        } else {
+                            schedule();
+                        }
                     } else if (autoWalkEnabled && roll < (threshold += preset.walkLeftChance)) {
                         if (now - cooldownRef.current.lastWalkAt < scaleMs(cfg.walkCooldownMs, preset.cooldownMultiplier)) {
                             if (DEBUG_RANDOM) console.debug('[random] skipped walkLeft — cooldown');
                             schedule(); return;
                         }
-                        if (DEBUG_RANDOM) console.debug('[random] walkLeft');
-                        cooldownRef.current.lastAnyBehaviorAt = now;
-                        cooldownRef.current.lastWalkAt = now;
-                        triggerWalkLeftRef.current('random walkLeft');
+                        if (DEBUG_RANDOM) console.debug('[random] selected action', { state: 'walk_left', reason: 'random walkLeft' });
+                        const accepted = dispatchPetActionRef.current({
+                            state: 'walk_left',
+                            source: 'random',
+                            reason: 'random walkLeft',
+                        });
+                        if (accepted) {
+                            cooldownRef.current.lastAnyBehaviorAt = now;
+                            cooldownRef.current.lastWalkAt = now;
+                        } else {
+                            schedule();
+                        }
                     } else if (stateDuration >= cfg.minNapIdleMs && roll < (threshold + preset.napChance)) {
                         if (now - cooldownRef.current.lastSleepAt < scaleMs(cfg.sleepCooldownMs, preset.cooldownMultiplier)) {
                             if (DEBUG_RANDOM) console.debug('[random] skipped nap — cooldown');
                             schedule(); return;
                         }
-                        if (DEBUG_RANDOM) console.debug('[random] nap');
-                        cooldownRef.current.lastAnyBehaviorAt = now;
-                        cooldownRef.current.lastSleepAt = now;
-                        triggerSleepRef.current('Zzz...', 'random nap');
+                        if (DEBUG_RANDOM) console.debug('[random] selected action', { state: 'sleeping', reason: 'random nap' });
+                        const accepted = dispatchPetActionRef.current({
+                            state: 'sleeping',
+                            source: 'random',
+                            reason: 'random nap',
+                            bubbleText: 'Zzz...',
+                        });
+                        if (accepted) {
+                            cooldownRef.current.lastAnyBehaviorAt = now;
+                            cooldownRef.current.lastSleepAt = now;
+                        } else {
+                            schedule();
+                        }
                     } else {
                         // No behavior this tick — reschedule
                         if (DEBUG_RANDOM) console.debug('[random] no-op tick, rescheduling');
@@ -242,9 +269,18 @@ export function useRandomBehavior({
                 } else if (petState === 'sleeping') {
                     if (stateDuration >= cfg.minSleepBeforeWakeMs && Math.random() < 0.35) {
                         // wakeUp — petState change will re-run this effect
-                        if (DEBUG_RANDOM) console.debug('[random] wakeUp');
-                        cooldownRef.current.lastAnyBehaviorAt = now;
-                        triggerHappyRef.current(pickRandom(WAKE_BUBBLES), 'random wakeUp');
+                        if (DEBUG_RANDOM) console.debug('[random] selected action', { state: 'happy', reason: 'random wakeUp' });
+                        const accepted = dispatchPetActionRef.current({
+                            state: 'happy',
+                            source: 'random',
+                            reason: 'random wakeUp',
+                            bubbleText: pickRandom(WAKE_BUBBLES),
+                        });
+                        if (accepted) {
+                            cooldownRef.current.lastAnyBehaviorAt = now;
+                        } else {
+                            schedule();
+                        }
                     } else {
                         // Still sleeping — reschedule
                         schedule();
@@ -271,5 +307,5 @@ export function useRandomBehavior({
     ]);
     // lastInteractionAtRef and enteredStateAtRef are refs (stable identity) —
     // read via .current inside callbacks so no dep needed.
-    // triggerHappy/triggerSleep are synced via the ref pair above.
+    // dispatchPetAction is synced via the ref above.
 }
