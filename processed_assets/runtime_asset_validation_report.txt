@@ -1,0 +1,277 @@
+========================================================================
+MochiCat Runtime Asset Validation Report
+Assets directory : /Users/williamzzz/Desktop/monicat/mochi-cat/src/assets/cat
+========================================================================
+
+[PASS] idle / idle/idle_000.png
+  exists               : True
+  image size           : 1122×1402
+  mode                 : RGBA
+  has alpha            : True
+  transparent ratio    : 70.59%
+  alpha bbox           : (196, 32, 856, 1269)
+  edge touching        : False
+  top band suspected   : False
+  checkerboard         : False
+  large bg suspected   : False
+
+[PASS] idle / idle/idle_001.png
+  exists               : True
+  image size           : 1122×1402
+  mode                 : RGBA
+  has alpha            : True
+  transparent ratio    : 70.49%
+  alpha bbox           : (187, 33, 846, 1288)
+  edge touching        : False
+  top band suspected   : False
+  checkerboard         : False
+  large bg suspected   : False
+
+[PASS] idle / idle/idle_002.png
+  exists               : True
+  image size           : 1122×1402
+  mode                 : RGBA
+  has alpha            : True
+  transparent ratio    : 70.82%
+  alpha bbox           : (190, 31, 843, 1285)
+  edge touching        : False
+  top band suspected   : False
+  checkerboard         : False
+  large bg suspected   : False
+
+[PASS] dragging / dragging/dragging_000.png
+  exists               : True
+  image size           : 1122×1402
+  mode                 : RGBA
+  has alpha            : True
+  transparent ratio    : 82.71%
+  alpha bbox           : (296, 55, 774, 1293)
+  edge touching        : False
+  top band suspected   : False
+  checkerboard         : False
+  large bg suspected   : False
+
+[PASS] dragging / dragging/dragging_001.png
+  exists               : True
+  image size           : 1122×1402
+  mode                 : RGBA
+  has alpha            : True
+  transparent ratio    : 83.12%
+  alpha bbox           : (288, 57, 773, 1332)
+  edge touching        : False
+  top band suspected   : False
+  checkerboard         : False
+  large bg suspected   : False
+
+[PASS] dragging / dragging/dragging_002.png
+  exists               : True
+  image size           : 1122×1402
+  mode                 : RGBA
+  has alpha            : True
+  transparent ratio    : 83.77%
+  alpha bbox           : (291, 56, 771, 1305)
+  edge touching        : False
+  top band suspected   : False
+  checkerboard         : False
+  large bg suspected   : False
+
+[PASS] happy / happy/happy_000.png
+  exists               : True
+  image size           : 1122×1402
+  mode                 : RGBA
+  has alpha            : True
+  transparent ratio    : 69.90%
+  alpha bbox           : (187, 37, 853, 1331)
+  edge touching        : False
+  top band suspected   : False
+  checkerboard         : False
+  large bg suspected   : False
+
+[PASS] happy / happy/happy_001.png
+  exists               : True
+  image size           : 1122×1402
+  mode                 : RGBA
+  has alpha            : True
+  transparent ratio    : 69.69%
+  alpha bbox           : (177, 26, 822, 1331)
+  edge touching        : False
+  top band suspected   : False
+  checkerboard         : False
+  large bg suspected   : False
+
+[PASS] happy / happy/happy_002.png
+  exists               : True
+  image size           : 1122×1402
+  mode                 : RGBA
+  has alpha            : True
+  transparent ratio    : 72.67%
+  alpha bbox           : (197, 49, 823, 1291)
+  edge touching        : False
+  top band suspected   : False
+  checkerboard         : False
+  large bg suspected   : False
+
+[PASS] sleeping / sleeping/sleeping_000.png
+  exists               : True
+  image size           : 1122×1402
+  mode                 : RGBA
+  has alpha            : True
+  transparent ratio    : 73.56%
+  alpha bbox           : (68, 421, 1061, 1017)
+  edge touching        : False
+  top band suspected   : False
+  checkerboard         : False
+  large bg suspected   : False
+
+[PASS] sleeping / sleeping/sleeping_001.png
+  exists               : True
+  image size           : 1122×1402
+  mode                 : RGBA
+  has alpha            : True
+  transparent ratio    : 73.45%
+  alpha bbox           : (68, 428, 1061, 1014)
+  edge touching        : False
+  top band suspected   : False
+  checkerboard         : False
+  large bg suspected   : False
+
+[PASS] sleeping / sleeping/sleeping_002.png
+  exists               : True
+  image size           : 1122×1402
+  mode                 : RGBA
+  has alpha            : True
+  transparent ratio    : 73.46%
+  alpha bbox           : (66, 410, 1061, 1005)
+  edge touching        : False
+  top band suspected   : False
+  checkerboard         : False
+  large bg suspected   : False
+
+[PASS] walk_right / walk_right/walk_right_000.png
+  exists               : True
+  image size           : 1122×1402
+  mode                 : RGBA
+  has alpha            : True
+  transparent ratio    : 81.27%
+  alpha bbox           : (46, 254, 1035, 1036)
+  edge touching        : False
+  top band suspected   : False
+  checkerboard         : False
+  large bg suspected   : False
+
+[PASS] walk_right / walk_right/walk_right_001.png
+  exists               : True
+  image size           : 1122×1402
+  mode                 : RGBA
+  has alpha            : True
+  transparent ratio    : 82.77%
+  alpha bbox           : (42, 251, 1050, 1011)
+  edge touching        : False
+  top band suspected   : False
+  checkerboard         : False
+  large bg suspected   : False
+
+[PASS] walk_right / walk_right/walk_right_002.png
+  exists               : True
+  image size           : 1122×1402
+  mode                 : RGBA
+  has alpha            : True
+  transparent ratio    : 82.79%
+  alpha bbox           : (53, 257, 1022, 1024)
+  edge touching        : False
+  top band suspected   : False
+  checkerboard         : False
+  large bg suspected   : False
+
+[PASS] walk_left / walk_left/walk_left_000.png
+  exists               : True
+  image size           : 1122×1402
+  mode                 : RGBA
+  has alpha            : True
+  transparent ratio    : 81.27%
+  alpha bbox           : (87, 254, 1076, 1036)
+  edge touching        : False
+  top band suspected   : False
+  checkerboard         : False
+  large bg suspected   : False
+
+[PASS] walk_left / walk_left/walk_left_001.png
+  exists               : True
+  image size           : 1122×1402
+  mode                 : RGBA
+  has alpha            : True
+  transparent ratio    : 82.77%
+  alpha bbox           : (72, 251, 1080, 1011)
+  edge touching        : False
+  top band suspected   : False
+  checkerboard         : False
+  large bg suspected   : False
+
+[PASS] walk_left / walk_left/walk_left_002.png
+  exists               : True
+  image size           : 1122×1402
+  mode                 : RGBA
+  has alpha            : True
+  transparent ratio    : 82.79%
+  alpha bbox           : (100, 257, 1069, 1024)
+  edge touching        : False
+  top band suspected   : False
+  checkerboard         : False
+  large bg suspected   : False
+
+[PASS] grooming / grooming/grooming_000.png
+  exists               : True
+  image size           : 1055×1491
+  mode                 : RGBA
+  has alpha            : True
+  transparent ratio    : 72.23%
+  alpha bbox           : (188, 111, 813, 1338)
+  edge touching        : False
+  top band suspected   : False
+  checkerboard         : False
+  large bg suspected   : False
+
+[PASS] grooming / grooming/grooming_001.png
+  exists               : True
+  image size           : 1055×1491
+  mode                 : RGBA
+  has alpha            : True
+  transparent ratio    : 73.17%
+  alpha bbox           : (160, 113, 777, 1319)
+  edge touching        : False
+  top band suspected   : False
+  checkerboard         : False
+  large bg suspected   : False
+
+[PASS] grooming / grooming/grooming_002.png
+  exists               : True
+  image size           : 1055×1491
+  mode                 : RGBA
+  has alpha            : True
+  transparent ratio    : 72.06%
+  alpha bbox           : (161, 94, 832, 1362)
+  edge touching        : False
+  top band suspected   : False
+  checkerboard         : False
+  large bg suspected   : False
+
+[PASS] grooming / grooming/grooming_003.png
+  exists               : True
+  image size           : 1055×1491
+  mode                 : RGBA
+  has alpha            : True
+  transparent ratio    : 72.83%
+  alpha bbox           : (154, 104, 799, 1351)
+  edge touching        : False
+  top band suspected   : False
+  checkerboard         : False
+  large bg suspected   : False
+
+========================================================================
+SUMMARY
+  Total files : 22
+  PASS        : 22
+  FAIL        : 0
+  SKIP        : 0
+  Warnings    : 0
+========================================================================

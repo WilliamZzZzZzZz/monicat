@@ -1,5 +1,9 @@
 import React, { useRef, useCallback } from 'react';
 
+// Size constants are still imported by App.tsx (for PET_SIZE_DEFAULT) and
+// settingsSchema.ts. The SizeSliderPanel component itself is legacy —
+// size controls are now fully integrated into SettingsPanel.
+// Do not render SizeSliderPanel directly; use SettingsPanel instead.
 export const PET_SIZE_MIN = 96;
 export const PET_SIZE_MAX = 260;
 export const PET_SIZE_DEFAULT = 220;

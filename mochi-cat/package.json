@@ -1,47 +1,63 @@
 {
-  "name": "mochi-cat",
-  "productName": "mochi-cat",
-  "version": "1.0.0",
-  "description": "My Electron application description",
-  "main": ".vite/build/main.js",
-  "private": true,
-  "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts,.tsx ."
-  },
-  "keywords": [],
-  "author": {
-    "name": "WilliamZzz",
-    "email": "zchenkb@connect.ust.hk"
-  },
-  "license": "MIT",
-  "devDependencies": {
-    "@electron-forge/cli": "^7.11.1",
-    "@electron-forge/maker-deb": "^7.11.1",
-    "@electron-forge/maker-rpm": "^7.11.1",
-    "@electron-forge/maker-squirrel": "^7.11.1",
-    "@electron-forge/maker-zip": "^7.11.1",
-    "@electron-forge/plugin-auto-unpack-natives": "^7.11.1",
-    "@electron-forge/plugin-fuses": "^7.11.1",
-    "@electron-forge/plugin-vite": "^7.11.1",
-    "@electron/fuses": "^1.8.0",
-    "@types/electron-squirrel-startup": "^1.0.2",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "@typescript-eslint/eslint-plugin": "^5.62.0",
-    "@typescript-eslint/parser": "^5.62.0",
-    "electron": "41.3.0",
-    "eslint": "^8.57.1",
-    "eslint-plugin-import": "^2.32.0",
-    "typescript": "~4.5.4",
-    "vite": "^5.4.21"
-  },
-  "dependencies": {
-    "electron-squirrel-startup": "^1.0.1",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5"
-  }
+    "name": "mochi-cat",
+    "productName": "mochi-cat",
+    "version": "1.0.0",
+    "description": "A lightweight macOS desktop pet app featuring a custom animated cat.",
+    "main": ".vite/build/main.js",
+    "private": true,
+    "scripts": {
+        "start": "electron-forge start",
+        "package": "electron-forge package",
+        "make": "electron-forge make",
+        "publish": "electron-forge publish",
+        "lint": "eslint --ext .ts,.tsx .",
+        "typecheck": "tsc --project tsconfig.typecheck.json",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:assets": "python3 ../tools/validate_runtime_assets.py",
+        "validate": "npm run typecheck && npm run lint && npm run test && npm run test:assets"
+    },
+    "keywords": [
+        "electron",
+        "desktop-pet",
+        "react",
+        "typescript",
+        "macos"
+    ],
+    "author": {
+        "name": "WilliamZzz",
+        "email": "zchenkb@connect.ust.hk"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "@electron-forge/cli": "^7.11.1",
+        "@electron-forge/maker-deb": "^7.11.1",
+        "@electron-forge/maker-rpm": "^7.11.1",
+        "@electron-forge/maker-squirrel": "^7.11.1",
+        "@electron-forge/maker-zip": "^7.11.1",
+        "@electron-forge/plugin-auto-unpack-natives": "^7.11.1",
+        "@electron-forge/plugin-fuses": "^7.11.1",
+        "@electron-forge/plugin-vite": "^7.11.1",
+        "@electron/fuses": "^1.8.0",
+        "@testing-library/jest-dom": "^6.9.1",
+        "@testing-library/react": "^16.3.2",
+        "@types/electron-squirrel-startup": "^1.0.2",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
+        "@typescript-eslint/eslint-plugin": "^5.62.0",
+        "@typescript-eslint/parser": "^5.62.0",
+        "@vitest/coverage-v8": "^4.1.5",
+        "electron": "41.3.0",
+        "eslint": "^8.57.1",
+        "eslint-plugin-import": "^2.32.0",
+        "jsdom": "^29.1.1",
+        "typescript": "~4.5.4",
+        "vite": "^5.4.21",
+        "vitest": "^4.1.5"
+    },
+    "dependencies": {
+        "electron-squirrel-startup": "^1.0.1",
+        "react": "^19.2.5",
+        "react-dom": "^19.2.5"
+    }
 }
